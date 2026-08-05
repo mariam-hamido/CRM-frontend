@@ -35,7 +35,12 @@ export const registerSchema = z.object({
     .string()
     .min(1, 'Company is required')
     .regex(/^[a-f\d]{24}$/i, 'Company must be a valid MongoDB ObjectId'),
+  phone: z
+    .string()
+    .trim()
+    .optional()
+    .transform((value) => (value ? value : undefined)),
 })
 
 export type LoginFormValues = z.infer<typeof loginSchema>
-export type RegisterFormValues = z.infer<typeof registerSchema>
+export type RegisterFormValues = z.input<typeof registerSchema>
