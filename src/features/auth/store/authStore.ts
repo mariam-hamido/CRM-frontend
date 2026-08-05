@@ -1,6 +1,28 @@
+// Authentication lifecycle
+// ------------------------
+// 1. login(user, token)      -> updates the Zustand store and persists under
+//                               'flowcrm.auth'. The token is mirrored to
+//                               AUTH_TOKEN_STORAGE_KEY ('flowcrm.accessToken'),
+//                               the single key the Axios request interceptor reads.
+// 2. Page refresh            -> persist rehydrates { user, token } synchronously
+//                               from 'flowcrm.auth'; merge recomputes
+//                               isAuthenticated; onRehydrateStorage re-mirrors the
+//                               token so the interceptor is consistent immediately.
+// 3. logout() / clearAuth()  -> resets the store and removes both keys.
+// The store never talks to Axios and Axios never reads the store; the only shared
+// contract between them is AUTH_TOKEN_STORAGE_KEY.
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import { AUTH_TOKEN_STORAGE_KEY } from '@/api/config'
 import type { AuthUser } from '@/features/auth/types/auth.types'
+
+function syncToken(token: string | null) {
+  if (token) {
+    localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token)
+  } else {
+    localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY)
+  }
+}
 
 export interface AuthState {
   user: AuthUser | null
@@ -47,9 +69,20 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: Boolean(persisted?.user && persisted?.token),
         }
       },
+      onRehydrateStorage: () => (state) => {
+        syncToken(state?.token ?? null)
+      },
     }
   )
 )
+
+// Mirror every token change (login, logout, setToken) into the storage key the
+// Axios request interceptor reads, so requests always send the latest JWT.
+useAuthStore.subscribe((state, previousState) => {
+  if (state.token !== previousState.token) {
+    syncToken(state.token)
+  }
+})
 
 export const selectUser = (state: AuthState) => state.user
 export const selectToken = (state: AuthState) => state.token
