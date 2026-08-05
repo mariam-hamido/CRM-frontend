@@ -1,8 +1,8 @@
 import { Suspense } from 'react'
 import { Navigate, type RouteObject } from 'react-router-dom'
 import { AuthLayout } from '@/app/layouts/AuthLayout'
-import { DashboardLayout } from '@/app/layouts/DashboardLayout'
 import { PublicLayout } from '@/app/layouts/PublicLayout'
+import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { ProtectedRoute, PublicRoute } from '@/app/router/guards'
 import {
   DashboardPage,
