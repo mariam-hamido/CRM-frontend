@@ -3,6 +3,7 @@ import { Navigate, type RouteObject } from 'react-router-dom'
 import { AuthLayout } from '@/app/layouts/AuthLayout'
 import { DashboardLayout } from '@/app/layouts/DashboardLayout'
 import { PublicLayout } from '@/app/layouts/PublicLayout'
+import { ProtectedRoute, PublicRoute } from '@/app/router/guards'
 import {
   DashboardPage,
   LoginPage,
@@ -18,36 +19,46 @@ export const routeConfig: RouteObject[] = [
     element: <Navigate to={ROUTES.login} replace />,
   },
   {
-    element: <AuthLayout />,
+    element: <PublicRoute />,
     children: [
       {
-        path: ROUTES.login,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <LoginPage />
-          </Suspense>
-        ),
-      },
-      {
-        path: ROUTES.register,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <RegisterPage />
-          </Suspense>
-        ),
+        element: <AuthLayout />,
+        children: [
+          {
+            path: ROUTES.login,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <LoginPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.register,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <RegisterPage />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
   },
   {
-    element: <DashboardLayout />,
+    element: <ProtectedRoute />,
     children: [
       {
-        path: ROUTES.dashboard,
-        element: (
-          <Suspense fallback={<LoadingFallback />}>
-            <DashboardPage />
-          </Suspense>
-        ),
+        element: <DashboardLayout />,
+        children: [
+          {
+            path: ROUTES.dashboard,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <DashboardPage />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
   },

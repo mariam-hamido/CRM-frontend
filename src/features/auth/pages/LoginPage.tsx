@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ROUTES } from '@/app/router/routeConstants'
+import type { AuthRedirectState } from '@/app/router/routeConstants'
 import { useLogin } from '@/features/auth/hooks/useLogin'
 import {
   AuthCard,
@@ -22,6 +23,7 @@ import type { FieldPath } from 'react-hook-form'
 export default function LoginPage() {
   const login = useLogin()
   const navigate = useNavigate()
+  const location = useLocation()
 
   const {
     register,
@@ -48,7 +50,10 @@ export default function LoginPage() {
 
   const onSubmit = handleSubmit((values) => {
     login.mutate(values, {
-      onSuccess: () => navigate(ROUTES.dashboard),
+      onSuccess: () => {
+        const from = (location.state as AuthRedirectState | null)?.from
+        navigate(from ?? ROUTES.dashboard, { replace: true })
+      },
     })
   })
 
