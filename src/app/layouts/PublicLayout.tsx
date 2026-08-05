@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
+import { Outlet } from 'react-router-dom'
 
-export function PublicLayout({ children }: { children: ReactNode }) {
-  return <>{children}</>
+export function PublicLayout() {
+  return <Outlet />
 }
