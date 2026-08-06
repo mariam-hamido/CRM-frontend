@@ -1,7 +1,7 @@
 import { Sheet, SheetContent } from '@/components/ui/sheet'
-import { NAVIGATION } from '@/config/navigation'
+import { getNavSections } from '@/constants/navigation'
 import { SidebarHeader } from '@/components/layout/SidebarHeader'
-import { SidebarItem } from '@/components/layout/SidebarItem'
+import { SidebarSection } from '@/components/layout/SidebarSection'
 
 export function MobileSidebar({
   open,
@@ -10,6 +10,8 @@ export function MobileSidebar({
   open: boolean
   onOpenChange: (open: boolean) => void
 }) {
+  const sections = getNavSections()
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="left" className="bg-background p-0">
@@ -17,9 +19,9 @@ export function MobileSidebar({
           <SidebarHeader />
           <nav className="flex-1 overflow-y-auto p-2">
             <ul className="flex flex-col gap-1">
-              {NAVIGATION.map((item) => (
-                <li key={item.href}>
-                  <SidebarItem item={item} />
+              {sections.map((section) => (
+                <li key={section.section}>
+                  <SidebarSection section={section} />
                 </li>
               ))}
             </ul>

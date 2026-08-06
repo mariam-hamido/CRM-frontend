@@ -1,7 +1,7 @@
-import { NAVIGATION } from '@/config/navigation'
+import { getNavSections } from '@/constants/navigation'
 import { SidebarFooter } from '@/components/layout/SidebarFooter'
 import { SidebarHeader } from '@/components/layout/SidebarHeader'
-import { SidebarItem } from '@/components/layout/SidebarItem'
+import { SidebarSection } from '@/components/layout/SidebarSection'
 import { cn } from '@/lib/utils'
 
 export function Sidebar({
@@ -11,6 +11,8 @@ export function Sidebar({
   collapsed: boolean
   onToggle: () => void
 }) {
+  const sections = getNavSections()
+
   return (
     <aside
       aria-label="Main navigation"
@@ -22,9 +24,9 @@ export function Sidebar({
       <SidebarHeader collapsed={collapsed} />
       <nav className="flex-1 overflow-y-auto p-2">
         <ul className="flex flex-col gap-1">
-          {NAVIGATION.map((item) => (
-            <li key={item.href}>
-              <SidebarItem item={item} collapsed={collapsed} />
+          {sections.map((section) => (
+            <li key={section.section}>
+              <SidebarSection section={section} collapsed={collapsed} />
             </li>
           ))}
         </ul>
