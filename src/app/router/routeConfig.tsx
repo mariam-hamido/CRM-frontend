@@ -5,6 +5,7 @@ import { PublicLayout } from '@/app/layouts/PublicLayout'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { ProtectedRoute, PublicRoute } from '@/app/router/guards'
 import {
+  CompanySettingsPage,
   DashboardPage,
   LoginPage,
   NotFoundPage,
@@ -55,6 +56,14 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <DashboardPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.settings,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <CompanySettingsPage />
               </Suspense>
             ),
           },

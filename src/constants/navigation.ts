@@ -103,7 +103,7 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'settings',
     label: 'Settings',
-    path: '/settings',
+    path: ROUTES.settings,
     icon: Settings,
     section: 'account',
   },

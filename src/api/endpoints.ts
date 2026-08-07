@@ -3,6 +3,11 @@ export const AUTH = {
   REGISTER: '/auth/register',
 } as const
 
+export const COMPANIES = {
+  BASE: '/companies',
+  ME: '/companies/me',
+} as const
+
 export const CUSTOMERS = {
   BASE: '/customers',
 } as const

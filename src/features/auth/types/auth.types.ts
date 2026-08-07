@@ -1,10 +1,8 @@
-export type UserRole = 'admin' | 'manager' | 'sales'
+import type { ApiResponse } from '@/types/api'
 
-export interface ApiResponse<T> {
-  success: boolean
-  message: string
-  data: T
-}
+export type { ApiResponse }
+
+export type UserRole = 'admin' | 'manager' | 'sales'
 
 export interface LoginRequest {
   email: string
