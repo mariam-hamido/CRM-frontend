@@ -4,9 +4,11 @@ import type { Pagination } from '@/types/api'
 export function Pagination({
   pagination,
   onPageChange,
+  itemLabel = 'contacts',
 }: {
   pagination: Pagination
   onPageChange: (page: number) => void
+  itemLabel?: string
 }) {
   if (pagination.totalPages <= 1) return null
 
@@ -23,7 +25,7 @@ export function Pagination({
         </span>{' '}
         of{' '}
         <span className="font-medium text-foreground">{pagination.total}</span>{' '}
-        contacts
+        {itemLabel}
       </p>
 
       <div className="flex items-center gap-2">
