@@ -12,6 +12,10 @@ export const CUSTOMERS = {
   BASE: '/customers',
 } as const
 
+export const CUSTOMER_CONTACTS = {
+  BASE: '/customer-contacts',
+} as const
+
 export const LEADS = {
   BASE: '/leads',
 } as const
