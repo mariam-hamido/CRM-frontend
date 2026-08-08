@@ -7,6 +7,8 @@ import { ProtectedRoute, PublicRoute } from '@/app/router/guards'
 import {
   CompaniesPage,
   CompanySettingsPage,
+  CustomerDetailPage,
+  CustomersPage,
   DashboardPage,
   LoginPage,
   NotFoundPage,
@@ -65,6 +67,22 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <CompaniesPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.customers,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <CustomersPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.customersDetail,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <CustomerDetailPage />
               </Suspense>
             ),
           },

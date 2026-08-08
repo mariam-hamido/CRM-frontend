@@ -47,7 +47,7 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'customers',
     label: 'Customers',
-    path: '/customers',
+    path: ROUTES.customers,
     icon: Users,
     section: 'management',
   },

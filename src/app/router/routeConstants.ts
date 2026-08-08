@@ -4,6 +4,8 @@ export const ROUTES = {
   register: '/register',
   dashboard: '/dashboard',
   companies: '/companies',
+  customers: '/customers',
+  customersDetail: '/customers/:id',
   settings: '/settings',
   notFound: '*',
 } as const
