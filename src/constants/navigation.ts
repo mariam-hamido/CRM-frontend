@@ -40,7 +40,7 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'companies',
     label: 'Companies',
-    path: '/companies',
+    path: ROUTES.companies,
     icon: Building2,
     section: 'management',
   },

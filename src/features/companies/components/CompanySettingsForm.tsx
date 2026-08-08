@@ -10,6 +10,10 @@ import {
   SubmitButton,
 } from '@/features/auth/components'
 import { CompanySelectField } from '@/features/companies/components/CompanySelectField'
+import {
+  COMPANY_STATUS_LABELS,
+  COMPANY_SUBSCRIPTION_PLAN_LABELS,
+} from '@/features/companies/constants/companyLabels'
 import { useUpdateCompany } from '@/features/companies/hooks/useUpdateCompany'
 import {
   companyUpdateSchema,
@@ -20,24 +24,8 @@ import {
   COMPANY_STATUSES,
   COMPANY_SUBSCRIPTION_PLANS,
   type Company,
-  type CompanyStatus,
-  type CompanySubscriptionPlan,
 } from '@/features/companies/types/company.types'
 import { companyToFormValues } from '@/features/companies/utils/companyUtils'
-
-const PLAN_LABELS: Record<CompanySubscriptionPlan, string> = {
-  free: 'Free',
-  starter: 'Starter',
-  professional: 'Professional',
-  enterprise: 'Enterprise',
-}
-
-const STATUS_LABELS: Record<CompanyStatus, string> = {
-  trial: 'Trial',
-  active: 'Active',
-  suspended: 'Suspended',
-  cancelled: 'Cancelled',
-}
 
 export function CompanySettingsForm({ company }: { company: Company }) {
   const update = useUpdateCompany()
@@ -221,7 +209,7 @@ export function CompanySettingsForm({ company }: { company: Company }) {
         >
           {COMPANY_SUBSCRIPTION_PLANS.map((plan) => (
             <option key={plan} value={plan}>
-              {PLAN_LABELS[plan]}
+              {COMPANY_SUBSCRIPTION_PLAN_LABELS[plan]}
             </option>
           ))}
         </CompanySelectField>
@@ -234,7 +222,7 @@ export function CompanySettingsForm({ company }: { company: Company }) {
         >
           {COMPANY_STATUSES.map((status) => (
             <option key={status} value={status}>
-              {STATUS_LABELS[status]}
+              {COMPANY_STATUS_LABELS[status]}
             </option>
           ))}
         </CompanySelectField>
