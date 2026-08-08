@@ -1,4 +1,6 @@
 export * from '@/features/leads/api/leadApi'
+export * from '@/features/leads/components'
+export * from '@/features/leads/constants/leadLabels'
 export * from '@/features/leads/hooks/leadKeys'
 export * from '@/features/leads/hooks/useCreateLead'
 export * from '@/features/leads/hooks/useDeleteLead'

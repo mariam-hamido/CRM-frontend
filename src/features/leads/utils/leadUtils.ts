@@ -24,6 +24,15 @@ export function leadToFormValues(lead: Lead): LeadFormValues {
   }
 }
 
+export function formatEstimatedValue(value?: number): string {
+  if (value === undefined || value === null || value === 0) return '—'
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  }).format(value)
+}
+
 export function toCreateLeadPayload(
   values: LeadFormValues
 ): CreateLeadPayload {
