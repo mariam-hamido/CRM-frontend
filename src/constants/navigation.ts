@@ -61,7 +61,7 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'leads',
     label: 'Leads',
-    path: '/leads',
+    path: ROUTES.leads,
     icon: Handshake,
     section: 'sales',
   },
