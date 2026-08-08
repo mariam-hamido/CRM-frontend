@@ -1,4 +1,5 @@
 export * from '@/features/customers/contacts/api/customerContactApi'
+export * from '@/features/customers/contacts/components'
 export * from '@/features/customers/contacts/hooks/useContacts'
 export * from '@/features/customers/contacts/hooks/useCreateContact'
 export * from '@/features/customers/contacts/hooks/useCustomerContacts'
