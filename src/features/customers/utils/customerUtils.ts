@@ -1,23 +1,8 @@
-import { useAuthStore } from '@/features/auth/store/authStore'
 import type { CustomerFormValues } from '@/features/customers/schemas/customer.schema'
 import type {
   CreateCustomerPayload,
   Customer,
-  UpdateCustomerPayload,
 } from '@/features/customers/types/customer.types'
-
-export interface CustomerAuthContext {
-  company: string
-  owner: string
-}
-
-export function getCustomerAuthContext(): CustomerAuthContext {
-  const user = useAuthStore.getState().user
-  if (!user) {
-    throw new Error('Authentication required')
-  }
-  return { company: user.company, owner: user._id }
-}
 
 export function customerToFormValues(customer: Customer): CustomerFormValues {
   return {
@@ -43,12 +28,9 @@ export function customerToFormValues(customer: Customer): CustomerFormValues {
 }
 
 export function toCustomerPayload(
-  values: CustomerFormValues,
-  auth: CustomerAuthContext
-): CreateCustomerPayload & UpdateCustomerPayload {
+  values: CustomerFormValues
+): CreateCustomerPayload {
   return {
-    company: auth.company,
-    owner: auth.owner,
     companyName: values.companyName,
     ...(values.industry ? { industry: values.industry } : {}),
     ...(values.website ? { website: values.website } : {}),

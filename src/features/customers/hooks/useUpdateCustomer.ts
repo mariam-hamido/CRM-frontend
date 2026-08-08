@@ -9,7 +9,6 @@ import {
 import type { CustomerFormValues } from '@/features/customers/schemas/customer.schema'
 import type { Customer } from '@/features/customers/types/customer.types'
 import {
-  getCustomerAuthContext,
   toCustomerPayload,
 } from '@/features/customers/utils/customerUtils'
 
@@ -18,7 +17,7 @@ export function useUpdateCustomer() {
 
   return useMutation<Customer, ApiError, { id: string; values: CustomerFormValues }>({
     mutationFn: async ({ id, values }) => {
-      const payload = toCustomerPayload(values, getCustomerAuthContext())
+      const payload = toCustomerPayload(values)
       const response = await updateCustomer(id, payload)
       return response.data
     },

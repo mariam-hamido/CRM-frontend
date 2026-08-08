@@ -49,8 +49,6 @@ export interface CustomerListData {
 }
 
 export interface CreateCustomerPayload {
-  company: string
-  owner: string
   companyName: string
   industry?: string
   website?: string
