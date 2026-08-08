@@ -17,6 +17,7 @@ import {
   CUSTOMER_SOURCE_LABELS,
   CUSTOMER_STATUS_LABELS,
 } from '@/features/customers/constants/customerLabels'
+import { CustomerContactsSection } from '@/features/customers/contacts/components/CustomerContactsSection'
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomers'
 import { useGetCompany } from '@/features/companies/hooks/useGetCompany'
 import type { Customer } from '@/features/customers/types/customer.types'
@@ -181,6 +182,8 @@ export default function CustomerDetailPage() {
               className="lg:col-span-2"
             />
           </section>
+
+          <CustomerContactsSection customerId={id ?? ''} />
         </>
       ) : (
         <CustomerListLoading />
