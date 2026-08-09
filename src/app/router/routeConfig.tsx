@@ -13,6 +13,7 @@ import {
   LeadsPage,
   LoginPage,
   NotFoundPage,
+  PipelinesPage,
   RegisterPage,
 } from '@/app/router/lazyPages'
 import { ROUTES } from '@/app/router/routeConstants'
@@ -92,6 +93,14 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <LeadsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.pipelines,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <PipelinesPage />
               </Suspense>
             ),
           },

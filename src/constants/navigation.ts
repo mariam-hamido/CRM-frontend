@@ -66,9 +66,9 @@ export const NAVIGATION: NavItem[] = [
     section: 'sales',
   },
   {
-    id: 'pipeline',
-    label: 'Pipeline',
-    path: '/pipeline',
+    id: 'pipelines',
+    label: 'Pipelines',
+    path: ROUTES.pipelines,
     icon: Workflow,
     section: 'sales',
   },

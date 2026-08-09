@@ -7,6 +7,7 @@ export const ROUTES = {
   customers: '/customers',
   customersDetail: '/customers/:id',
   leads: '/leads',
+  pipelines: '/pipelines',
   settings: '/settings',
   notFound: '*',
 } as const
