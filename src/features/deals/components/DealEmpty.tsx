@@ -4,9 +4,11 @@ import { Card, CardContent } from '@/components/ui/card'
 
 export function DealEmpty({
   onAdd,
+  onClearFilters,
   hasActiveFilters = false,
 }: {
   onAdd: () => void
+  onClearFilters?: () => void
   hasActiveFilters?: boolean
 }) {
   return (
@@ -28,11 +30,15 @@ export function DealEmpty({
           </p>
           <p className="text-sm text-muted-foreground">
             {hasActiveFilters
-              ? 'Try adjusting your search or filters.'
+              ? 'No deals match your current filters. Try adjusting your search or filters.'
               : 'Add a deal to start tracking your sales pipeline.'}
           </p>
         </div>
-        {!hasActiveFilters ? (
+        {hasActiveFilters && onClearFilters ? (
+          <Button type="button" variant="outline" onClick={onClearFilters}>
+            Clear filters
+          </Button>
+        ) : !hasActiveFilters ? (
           <Button type="button" variant="outline" onClick={onAdd}>
             <Plus aria-hidden="true" />
             Add deal

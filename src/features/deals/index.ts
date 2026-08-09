@@ -1,4 +1,6 @@
 export * from '@/features/deals/api/dealApi'
+export * from '@/features/deals/components'
+export * from '@/features/deals/constants/dealLabels'
 export * from '@/features/deals/hooks/dealKeys'
 export * from '@/features/deals/hooks/useCreateDeal'
 export * from '@/features/deals/hooks/useDeal'

@@ -75,7 +75,7 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'deals',
     label: 'Deals',
-    path: '/deals',
+    path: ROUTES.deals,
     icon: ListChecks,
     section: 'sales',
   },

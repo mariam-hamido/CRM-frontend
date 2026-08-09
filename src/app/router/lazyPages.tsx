@@ -8,5 +8,6 @@ export const CompanySettingsPage = lazy(() => import('@/features/companies/pages
 export const CustomersPage = lazy(() => import('@/features/customers/pages/CustomersPage'))
 export const CustomerDetailPage = lazy(() => import('@/features/customers/pages/CustomerDetailPage'))
 export const LeadsPage = lazy(() => import('@/features/leads/pages/LeadsPage'))
+export const DealsPage = lazy(() => import('@/features/deals/pages/DealsPage'))
 export const PipelinesPage = lazy(() => import('@/features/pipelines/pages/PipelinesPage'))
 export const NotFoundPage = lazy(() => import('@/app/pages/NotFoundPage'))
