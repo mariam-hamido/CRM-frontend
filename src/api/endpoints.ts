@@ -23,3 +23,15 @@ export const LEADS = {
 export const DEALS = {
   BASE: '/deals',
 } as const
+
+export const PIPELINES = {
+  BASE: '/pipelines',
+  DETAIL: (id: string) => `/pipelines/${id}`,
+} as const
+
+export const PIPELINE_STAGES = {
+  BASE: '/pipeline-stages',
+  BY_PIPELINE: (pipelineId: string) =>
+    `/pipeline-stages/pipeline/${pipelineId}`,
+  DETAIL: (id: string) => `/pipeline-stages/${id}`,
+} as const
