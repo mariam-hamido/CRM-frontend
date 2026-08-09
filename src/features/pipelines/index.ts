@@ -1,5 +1,6 @@
 export * from '@/features/pipelines/api/pipelineApi'
 export * from '@/features/pipelines/api/pipelineStageApi'
+export * from '@/features/pipelines/components'
 export * from '@/features/pipelines/hooks/pipelineKeys'
 export * from '@/features/pipelines/hooks/useCreatePipeline'
 export * from '@/features/pipelines/hooks/useCreatePipelineStage'
