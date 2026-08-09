@@ -7,12 +7,13 @@ import type {
   DealListParams,
 } from '@/features/deals/types/deal.types'
 
-export function useDeals(params: DealListParams = {}) {
+export function useDeals(params: DealListParams = {}, enabled = true) {
   return useQuery<DealListData, ApiError>({
     queryKey: dealsListQueryKey(params),
     queryFn: async () => {
       const response = await getDeals(params)
       return response.data
     },
+    enabled,
   })
 }

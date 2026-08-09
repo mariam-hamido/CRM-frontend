@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Plus, Search } from 'lucide-react'
+import { KanbanSquare, LayoutList, Plus, Search } from 'lucide-react'
 import { GENERIC_API_ERROR_MESSAGE } from '@/api/interceptors'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,6 +13,7 @@ import {
   DealDialog,
   DealEmpty,
   DealError,
+  DealKanbanBoard,
   DealList,
   DealLoading,
 } from '@/features/deals/components'
@@ -32,6 +33,7 @@ const LOOKUP_LIMIT = 100
 export default function DealsPage() {
   const currentUser = useAuthStore(selectUser)
 
+  const [view, setView] = useState<'list' | 'board'>('list')
   const [page, setPage] = useState(1)
   const [searchInput, setSearchInput] = useState('')
   const [statusFilter, setStatusFilter] = useState<DealStatus | ''>('')
@@ -111,126 +113,167 @@ export default function DealsPage() {
             Manage the deals in your sales pipeline.
           </p>
         </div>
-        <Button type="button" onClick={openCreateDialog}>
-          <Plus aria-hidden="true" />
-          Add deal
-        </Button>
+        <div className="flex items-center gap-2">
+          <div className="flex rounded-lg border p-0.5">
+            <Button
+              type="button"
+              variant={view === 'list' ? 'default' : 'ghost'}
+              size="sm"
+              aria-pressed={view === 'list'}
+              onClick={() => setView('list')}
+            >
+              <LayoutList aria-hidden="true" />
+              List
+            </Button>
+            <Button
+              type="button"
+              variant={view === 'board' ? 'default' : 'ghost'}
+              size="sm"
+              aria-pressed={view === 'board'}
+              onClick={() => setView('board')}
+            >
+              <KanbanSquare aria-hidden="true" />
+              Board
+            </Button>
+          </div>
+          <Button type="button" onClick={openCreateDialog}>
+            <Plus aria-hidden="true" />
+            Add deal
+          </Button>
+        </div>
       </header>
 
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="relative w-full sm:max-w-sm">
-          <Search
-            className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
-            aria-hidden="true"
-          />
-          <Input
-            type="search"
-            placeholder="Search by deal title…"
-            value={searchInput}
-            onChange={(event) => setSearchInput(event.target.value)}
-            className="pl-9"
-            aria-label="Search deals"
-          />
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3">
-          <SelectField
-            id="status-filter"
-            aria-label="Filter by status"
-            className="w-40"
-            value={statusFilter}
-            onChange={(event) =>
-              setStatusFilter(event.target.value as DealStatus | '')
-            }
-          >
-            <option value="">All statuses</option>
-            {DEAL_STATUSES.map((status) => (
-              <option key={status} value={status}>
-                {DEAL_STATUS_LABELS[status]}
-              </option>
-            ))}
-          </SelectField>
-
-          <SelectField
-            id="pipeline-filter"
-            aria-label="Filter by pipeline"
-            className="w-40"
-            value={pipelineFilter}
-            onChange={(event) => {
-              setPipelineFilter(event.target.value)
-              setStageFilter('')
-            }}
-          >
-            <option value="">All pipelines</option>
-            {pipelines.map((pipeline) => (
-              <option key={pipeline._id} value={pipeline._id}>
-                {pipeline.name}
-              </option>
-            ))}
-          </SelectField>
-
-          <SelectField
-            id="stage-filter"
-            aria-label="Filter by stage"
-            className="w-40"
-            value={stageFilter}
-            onChange={(event) => setStageFilter(event.target.value)}
-          >
-            <option value="">All stages</option>
-            {filterableStages.map((stage) => (
-              <option key={stage._id} value={stage._id}>
-                {stage.name}
-              </option>
-            ))}
-          </SelectField>
-
-          {owners.length > 0 ? (
-            <SelectField
-              id="owner-filter"
-              aria-label="Filter by owner"
-              className="w-40"
-              value={ownerFilter}
-              onChange={(event) => setOwnerFilter(event.target.value)}
-            >
-              <option value="">All owners</option>
-              {owners.map((owner) => (
-                <option key={owner._id} value={owner._id}>
-                  {owner.firstName} {owner.lastName}
-                </option>
-              ))}
-            </SelectField>
-          ) : null}
-        </div>
-      </div>
-
-      {dealsQuery.isPending ? (
-        <DealLoading />
-      ) : dealsQuery.isError ? (
-        <DealError
-          message={dealsQuery.error?.message ?? GENERIC_API_ERROR_MESSAGE}
-          onRetry={() => void dealsQuery.refetch()}
-        />
-      ) : deals.length === 0 ? (
-        <DealEmpty
-          hasActiveFilters={hasActiveFilters}
-          onAdd={openCreateDialog}
-          onClearFilters={hasActiveFilters ? clearFilters : undefined}
-        />
-      ) : (
-        <DealList
-          deals={deals}
-          customers={customers}
+      {view === 'board' ? (
+        <DealKanbanBoard
           pipelines={pipelines}
-          stages={stages}
+          customers={customers}
           owners={owners}
           onEdit={openEditDialog}
           onDelete={setDealToDelete}
+          onAddDeal={openCreateDialog}
         />
-      )}
+      ) : (
+        <>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="relative w-full sm:max-w-sm">
+              <Search
+                className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
+                aria-hidden="true"
+              />
+              <Input
+                type="search"
+                placeholder="Search by deal title…"
+                value={searchInput}
+                onChange={(event) => setSearchInput(event.target.value)}
+                className="pl-9"
+                aria-label="Search deals"
+              />
+            </div>
 
-      {hasDeals && pagination ? (
-        <Pagination pagination={pagination} onPageChange={setPage} itemLabel="deals" />
-      ) : null}
+            <div className="flex flex-wrap items-center gap-3">
+              <SelectField
+                id="status-filter"
+                aria-label="Filter by status"
+                className="w-40"
+                value={statusFilter}
+                onChange={(event) =>
+                  setStatusFilter(event.target.value as DealStatus | '')
+                }
+              >
+                <option value="">All statuses</option>
+                {DEAL_STATUSES.map((status) => (
+                  <option key={status} value={status}>
+                    {DEAL_STATUS_LABELS[status]}
+                  </option>
+                ))}
+              </SelectField>
+
+              <SelectField
+                id="pipeline-filter"
+                aria-label="Filter by pipeline"
+                className="w-40"
+                value={pipelineFilter}
+                onChange={(event) => {
+                  setPipelineFilter(event.target.value)
+                  setStageFilter('')
+                }}
+              >
+                <option value="">All pipelines</option>
+                {pipelines.map((pipeline) => (
+                  <option key={pipeline._id} value={pipeline._id}>
+                    {pipeline.name}
+                  </option>
+                ))}
+              </SelectField>
+
+              <SelectField
+                id="stage-filter"
+                aria-label="Filter by stage"
+                className="w-40"
+                value={stageFilter}
+                onChange={(event) => setStageFilter(event.target.value)}
+              >
+                <option value="">All stages</option>
+                {filterableStages.map((stage) => (
+                  <option key={stage._id} value={stage._id}>
+                    {stage.name}
+                  </option>
+                ))}
+              </SelectField>
+
+              {owners.length > 0 ? (
+                <SelectField
+                  id="owner-filter"
+                  aria-label="Filter by owner"
+                  className="w-40"
+                  value={ownerFilter}
+                  onChange={(event) => setOwnerFilter(event.target.value)}
+                >
+                  <option value="">All owners</option>
+                  {owners.map((owner) => (
+                    <option key={owner._id} value={owner._id}>
+                      {owner.firstName} {owner.lastName}
+                    </option>
+                  ))}
+                </SelectField>
+              ) : null}
+            </div>
+          </div>
+
+          {dealsQuery.isPending ? (
+            <DealLoading />
+          ) : dealsQuery.isError ? (
+            <DealError
+              message={dealsQuery.error?.message ?? GENERIC_API_ERROR_MESSAGE}
+              onRetry={() => void dealsQuery.refetch()}
+            />
+          ) : deals.length === 0 ? (
+            <DealEmpty
+              hasActiveFilters={hasActiveFilters}
+              onAdd={openCreateDialog}
+              onClearFilters={hasActiveFilters ? clearFilters : undefined}
+            />
+          ) : (
+            <DealList
+              deals={deals}
+              customers={customers}
+              pipelines={pipelines}
+              stages={stages}
+              owners={owners}
+              onEdit={openEditDialog}
+              onDelete={setDealToDelete}
+            />
+          )}
+
+          {hasDeals && pagination ? (
+            <Pagination
+              pagination={pagination}
+              onPageChange={setPage}
+              itemLabel="deals"
+            />
+          ) : null}
+        </>
+      )}
 
       <DealDialog
         open={formOpen}
