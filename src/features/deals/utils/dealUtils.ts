@@ -73,3 +73,26 @@ export function toUpdateDealPayload(
     ...(values.stage ? { stage: values.stage } : {}),
   }
 }
+
+const DEAL_VALUE_FORMATTER = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+})
+
+export function formatDealValue(value?: number) {
+  return value === undefined ? '—' : DEAL_VALUE_FORMATTER.format(value)
+}
+
+export function formatProbability(value?: number) {
+  return value === undefined ? '—' : `${value}%`
+}
+
+export function formatDate(value?: string) {
+  if (!value) return '—'
+  return new Date(value).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
