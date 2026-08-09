@@ -10,6 +10,7 @@ import {
   CustomerDetailPage,
   CustomersPage,
   DashboardPage,
+  DealDetailPage,
   DealsPage,
   LeadsPage,
   LoginPage,
@@ -102,6 +103,14 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <DealsPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.dealsDetail,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <DealDetailPage />
               </Suspense>
             ),
           },

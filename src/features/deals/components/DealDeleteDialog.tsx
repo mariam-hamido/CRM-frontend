@@ -15,17 +15,22 @@ export function DealDeleteDialog({
   deal,
   open,
   onOpenChange,
+  onDeleted,
 }: {
   deal: Deal | null
   open: boolean
   onOpenChange: (open: boolean) => void
+  onDeleted?: () => void
 }) {
   const deleteDeal = useDeleteDeal()
 
   const handleDelete = () => {
     if (!deal) return
     deleteDeal.mutate(deal._id, {
-      onSuccess: () => onOpenChange(false),
+      onSuccess: () => {
+        onDeleted?.()
+        onOpenChange(false)
+      },
     })
   }
 

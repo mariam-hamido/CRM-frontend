@@ -1,4 +1,5 @@
 import { MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { ROUTES } from '@/app/router/routeConstants'
 import { DealStatusBadge } from '@/features/deals/components/DealStatusBadge'
 import type { Deal } from '@/features/deals/types/deal.types'
 import {
@@ -76,7 +78,14 @@ export function DealRow({
       <div
         className={`hidden items-center gap-4 px-4 py-3 sm:px-6 md:grid ${DEAL_COLUMNS}`}
       >
-        <div className="min-w-0 truncate font-medium">{deal.title}</div>
+        <div className="min-w-0">
+          <Link
+            to={ROUTES.dealsDetail.replace(':id', deal._id)}
+            className="block min-w-0 truncate font-medium hover:text-primary hover:underline"
+          >
+            {deal.title}
+          </Link>
+        </div>
         <div className="hidden min-w-0 truncate text-muted-foreground lg:block">
           {customerName ?? '—'}
         </div>
@@ -103,7 +112,12 @@ export function DealRow({
       <div className="flex flex-col gap-2 px-4 py-3 sm:px-6 md:hidden">
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">
-            <p className="truncate font-medium">{deal.title}</p>
+            <Link
+              to={ROUTES.dealsDetail.replace(':id', deal._id)}
+              className="block truncate font-medium hover:text-primary hover:underline"
+            >
+              {deal.title}
+            </Link>
             <p className="truncate text-sm text-muted-foreground">
               {customerName ?? '—'}
             </p>

@@ -8,6 +8,7 @@ export const ROUTES = {
   customersDetail: '/customers/:id',
   leads: '/leads',
   deals: '/deals',
+  dealsDetail: '/deals/:id',
   pipelines: '/pipelines',
   settings: '/settings',
   notFound: '*',
