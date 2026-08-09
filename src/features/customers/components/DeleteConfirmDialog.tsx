@@ -39,8 +39,7 @@ export function DeleteConfirmDialog({
             <span className="font-medium text-foreground">
               {customer?.companyName ?? 'this customer'}
             </span>
-            ? This will permanently remove the customer record. This action
-            cannot be undone.
+            ? This will remove this customer from the active list.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

@@ -3,21 +3,25 @@ import { toast } from 'sonner'
 import type { ApiError } from '@/api/interceptors'
 import { deleteCustomerContact } from '@/features/customers/contacts/api/customerContactApi'
 import {
-  contactsQueryKey,
   contactDetailQueryKey,
+  customerContactsQueryKey,
 } from '@/features/customers/contacts/hooks/customerContactKeys'
 
 export function useDeleteContact() {
   const queryClient = useQueryClient()
 
-  return useMutation<null, ApiError, string>({
-    mutationFn: async (id) => {
+  return useMutation<null, ApiError, { id: string; customerId: string }>({
+    mutationFn: async ({ id }) => {
       await deleteCustomerContact(id)
       return null
     },
-    onSuccess: (_data, id) => {
-      queryClient.removeQueries({ queryKey: contactDetailQueryKey(id) })
-      void queryClient.invalidateQueries({ queryKey: contactsQueryKey })
+    onSuccess: (_data, variables) => {
+      queryClient.removeQueries({
+        queryKey: contactDetailQueryKey(variables.id),
+      })
+      void queryClient.invalidateQueries({
+        queryKey: customerContactsQueryKey(variables.customerId),
+      })
       toast.success('Contact deleted successfully.')
     },
   })

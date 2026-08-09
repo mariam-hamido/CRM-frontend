@@ -44,8 +44,7 @@ export function LeadDeleteDialog({
             <span className="font-medium text-foreground">
               {leadDisplayName(lead) || 'this lead'}
             </span>
-            ? This will permanently remove the lead from your pipeline. This
-            action cannot be undone.
+            ? This will remove this lead from your pipeline.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

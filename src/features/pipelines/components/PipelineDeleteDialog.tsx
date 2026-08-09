@@ -44,7 +44,7 @@ export function PipelineDeleteDialog({
             <span className="font-medium text-foreground">
               {pipeline?.name ?? 'this pipeline'}
             </span>
-            ? This will also remove its stages. This action cannot be undone.
+            ? This will also remove its stages from the active list.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

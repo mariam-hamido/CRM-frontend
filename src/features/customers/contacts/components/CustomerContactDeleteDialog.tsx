@@ -29,9 +29,10 @@ export function CustomerContactDeleteDialog({
 
   const handleDelete = () => {
     if (!contact) return
-    deleteContact.mutate(contact._id, {
-      onSuccess: () => onOpenChange(false),
-    })
+    deleteContact.mutate(
+      { id: contact._id, customerId: contact.customer },
+      { onSuccess: () => onOpenChange(false) }
+    )
   }
 
   return (
@@ -44,8 +45,7 @@ export function CustomerContactDeleteDialog({
             <span className="font-medium text-foreground">
               {contactDisplayName(contact) || 'this contact'}
             </span>
-            ? This will permanently remove the contact record from the
-            customer. This action cannot be undone.
+            ? This will remove this contact from the active list.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

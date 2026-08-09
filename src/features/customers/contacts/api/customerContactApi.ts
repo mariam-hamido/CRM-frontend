@@ -19,16 +19,6 @@ export async function createCustomerContact(
   return response.data
 }
 
-export async function getCustomerContacts(
-  params: ContactListParams = {}
-): Promise<ContactListResponse> {
-  const response = await apiClient.get<ContactListResponse>(
-    CUSTOMER_CONTACTS.BASE,
-    { params }
-  )
-  return response.data
-}
-
 export async function getCustomerContactsByCustomer(
   customerId: string,
   params: ContactListParams = {}

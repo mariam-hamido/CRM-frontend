@@ -3,8 +3,8 @@ import { toast } from 'sonner'
 import type { ApiError } from '@/api/interceptors'
 import { updateCustomerContact } from '@/features/customers/contacts/api/customerContactApi'
 import {
-  contactsQueryKey,
   contactDetailQueryKey,
+  customerContactsQueryKey,
 } from '@/features/customers/contacts/hooks/customerContactKeys'
 import type { CustomerContactFormValues } from '@/features/customers/contacts/schemas/customerContact.schema'
 import type { CustomerContact } from '@/features/customers/contacts/types/customerContact.types'
@@ -30,7 +30,9 @@ export function useUpdateContact() {
         contactDetailQueryKey(contact._id),
         contact
       )
-      void queryClient.invalidateQueries({ queryKey: contactsQueryKey })
+      void queryClient.invalidateQueries({
+        queryKey: customerContactsQueryKey(contact.customer),
+      })
       toast.success('Contact updated successfully.')
     },
   })

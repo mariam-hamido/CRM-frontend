@@ -44,8 +44,7 @@ export function DealDeleteDialog({
             <span className="font-medium text-foreground">
               {deal?.title ?? 'this deal'}
             </span>
-            ? This will permanently remove the deal from your pipeline. This
-            action cannot be undone.
+            ? This will remove this deal from your pipeline.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

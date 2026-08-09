@@ -1,11 +1,5 @@
 import type { ContactListParams } from '@/features/customers/contacts/types/customerContact.types'
 
-export const contactsQueryKey = ['customer-contacts'] as const
-
-export function contactsListQueryKey(params: ContactListParams = {}) {
-  return ['customer-contacts', 'list', params] as const
-}
-
 export function customerContactsQueryKey(customerId: string | undefined) {
   return ['customer-contacts', 'customer', customerId] as const
 }
