@@ -22,6 +22,10 @@ export const LEADS = {
 
 export const DEALS = {
   BASE: '/deals',
+  DETAIL: (id: string) => `/deals/${id}`,
+  STAGE: (id: string) => `/deals/${id}/stage`,
+  WON: (id: string) => `/deals/${id}/won`,
+  LOST: (id: string) => `/deals/${id}/lost`,
 } as const
 
 export const PIPELINES = {
