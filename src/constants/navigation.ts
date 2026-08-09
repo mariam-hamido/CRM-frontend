@@ -57,6 +57,7 @@ export const NAVIGATION: NavItem[] = [
     path: '/contacts',
     icon: Contact,
     section: 'management',
+    disabled: true,
   },
   {
     id: 'leads',
@@ -85,6 +86,7 @@ export const NAVIGATION: NavItem[] = [
     path: '/tasks',
     icon: CalendarDays,
     section: 'activity',
+    disabled: true,
   },
   {
     id: 'meetings',
@@ -92,6 +94,7 @@ export const NAVIGATION: NavItem[] = [
     path: '/meetings',
     icon: UserRound,
     section: 'activity',
+    disabled: true,
   },
   {
     id: 'notifications',
@@ -99,6 +102,7 @@ export const NAVIGATION: NavItem[] = [
     path: '/notifications',
     icon: Bell,
     section: 'account',
+    disabled: true,
   },
   {
     id: 'settings',

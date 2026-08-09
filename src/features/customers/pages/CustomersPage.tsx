@@ -6,6 +6,7 @@ import { ROUTES } from '@/app/router/routeConstants'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { Pagination } from '@/components/ui/pagination'
 import { SelectField } from '@/components/ui/select-field'
 import { useDebouncedValue } from '@/hooks/useDebouncedValue'
 import {
@@ -194,44 +195,11 @@ export default function CustomersPage() {
       )}
 
       {hasCustomers && pagination ? (
-        <footer className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted-foreground">
-            Showing{' '}
-            <span className="font-medium text-foreground">
-              {(pagination.page - 1) * pagination.limit + 1}–
-              {Math.min(pagination.page * pagination.limit, pagination.total)}
-            </span>{' '}
-            of{' '}
-            <span className="font-medium text-foreground">
-              {pagination.total}
-            </span>{' '}
-            customers
-          </p>
-
-          <div className="flex items-center gap-2">
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              disabled={pagination.page <= 1}
-              onClick={() => setPage((current) => current - 1)}
-            >
-              Previous
-            </Button>
-            <span className="px-1 text-sm text-muted-foreground">
-              Page {pagination.page} of {pagination.totalPages}
-            </span>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              disabled={pagination.page >= pagination.totalPages}
-              onClick={() => setPage((current) => current + 1)}
-            >
-              Next
-            </Button>
-          </div>
-        </footer>
+        <Pagination
+          pagination={pagination}
+          onPageChange={setPage}
+          itemLabel="customers"
+        />
       ) : null}
 
       <CustomerFormDialog
