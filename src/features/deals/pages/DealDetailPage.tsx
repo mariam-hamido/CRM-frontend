@@ -9,7 +9,7 @@ import {
   type CompanyInfoRow,
 } from '@/features/companies/components'
 import { selectUser, useAuthStore } from '@/features/auth/store/authStore'
-import { useGetCustomers } from '@/features/customers/hooks/useGetCustomers'
+import { useGetCustomers, useGetCustomer } from '@/features/customers/hooks/useGetCustomers'
 import {
   DealDeleteDialog,
   DealDialog,
@@ -26,7 +26,11 @@ import {
   formatProbability,
 } from '@/features/deals/utils/dealUtils'
 import { usePipelines } from '@/features/pipelines/hooks/usePipelines'
-import { usePipelineStages } from '@/features/pipelines/hooks/usePipelineStages'
+import { usePipeline } from '@/features/pipelines/hooks/usePipeline'
+import {
+  usePipelineStages,
+  usePipelineStagesByPipeline,
+} from '@/features/pipelines/hooks/usePipelineStages'
 import type { Customer } from '@/features/customers/types/customer.types'
 
 const LOOKUP_LIMIT = 100
@@ -95,6 +99,7 @@ export default function DealDetailPage() {
   const [deleteOpen, setDeleteOpen] = useState(false)
 
   const dealQuery = useDeal(id)
+  const deal = dealQuery.data
 
   const customersQuery = useGetCustomers({ limit: LOOKUP_LIMIT })
   const pipelinesQuery = usePipelines({
@@ -104,22 +109,20 @@ export default function DealDetailPage() {
   })
   const stagesQuery = usePipelineStages({ limit: LOOKUP_LIMIT })
 
+  const customerQuery = useGetCustomer(deal?.customer)
+  const pipelineQuery = usePipeline(deal?.pipeline)
+  const stagesByPipelineQuery = usePipelineStagesByPipeline(deal?.pipeline)
+
   const customers = customersQuery.data?.customers ?? []
   const pipelines = pipelinesQuery.data?.pipelines ?? []
   const stages = stagesQuery.data?.stages ?? []
   const owners = currentUser ? [currentUser] : []
 
-  const deal = dealQuery.data
-
-  const customer = deal
-    ? customers.find((entry) => entry._id === deal.customer)
-    : undefined
-  const pipelineName = deal
-    ? pipelines.find((entry) => entry._id === deal.pipeline)?.name
-    : undefined
-  const stageName = deal
-    ? stages.find((entry) => entry._id === deal.stage)?.name
-    : undefined
+  const customer = customerQuery.data
+  const pipelineName = pipelineQuery.data?.name
+  const stageName = stagesByPipelineQuery.data?.stages.find(
+    (entry) => entry._id === deal?.stage
+  )?.name
   const ownerName =
     deal && currentUser && deal.owner === currentUser._id
       ? `${currentUser.firstName} ${currentUser.lastName}`

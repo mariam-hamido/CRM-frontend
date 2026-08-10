@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { KanbanSquare, LayoutList, Plus, Search } from 'lucide-react'
 import { GENERIC_API_ERROR_MESSAGE } from '@/api/interceptors'
 import { Button } from '@/components/ui/button'
@@ -19,6 +19,7 @@ import {
 } from '@/features/deals/components'
 import { DEAL_STATUS_LABELS } from '@/features/deals/constants/dealLabels'
 import { useDeals } from '@/features/deals/hooks/useDeals'
+import { useDealLookupNames } from '@/features/deals/hooks/useDealLookupNames'
 import {
   DEAL_STATUSES,
   type Deal,
@@ -75,6 +76,13 @@ export default function DealsPage() {
 
   const deals = dealsQuery.data?.deals ?? []
   const pagination = dealsQuery.data?.pagination
+  const lookup = useDealLookupNames({ deals, customers, pipelines, stages })
+  const ownerNames = useMemo(() => {
+    if (!currentUser) return new Map<string, string>()
+    return new Map([
+      [currentUser._id, `${currentUser.firstName} ${currentUser.lastName}`],
+    ])
+  }, [currentUser])
   const hasActiveFilters = Boolean(
     search || statusFilter || pipelineFilter || stageFilter || ownerFilter
   )
@@ -256,10 +264,10 @@ export default function DealsPage() {
           ) : (
             <DealList
               deals={deals}
-              customers={customers}
-              pipelines={pipelines}
-              stages={stages}
-              owners={owners}
+              customerNames={lookup.customerNames}
+              pipelineNames={lookup.pipelineNames}
+              stageNames={lookup.stageNames}
+              ownerNames={ownerNames}
               onEdit={openEditDialog}
               onDelete={setDealToDelete}
             />

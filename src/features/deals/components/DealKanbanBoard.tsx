@@ -21,6 +21,7 @@ import {
   DealKanbanSkeleton,
 } from '@/features/deals/components'
 import { useDeals } from '@/features/deals/hooks/useDeals'
+import { useDealLookupNames } from '@/features/deals/hooks/useDealLookupNames'
 import { useMoveDealStage } from '@/features/deals/hooks/useMoveDealStage'
 import type { Deal } from '@/features/deals/types/deal.types'
 import { usePipelineStagesByPipeline } from '@/features/pipelines/hooks/usePipelineStages'
@@ -56,6 +57,7 @@ export function DealKanbanBoard({
 
   const stages = stagesQuery.data?.stages ?? []
   const deals = dealsQuery.data?.deals ?? []
+  const lookup = useDealLookupNames({ deals, customers, pipelines })
 
   const dealsByStage = new Map<string, Deal[]>()
   for (const stage of stages) {
@@ -182,7 +184,7 @@ export function DealKanbanBoard({
                 key={stage._id}
                 stage={stage}
                 deals={dealsByStage.get(stage._id) ?? []}
-                customers={customers}
+                customerNames={lookup.customerNames}
                 owners={owners}
                 onEdit={onEdit}
                 onDelete={onDelete}

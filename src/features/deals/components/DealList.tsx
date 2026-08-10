@@ -1,41 +1,24 @@
 import { Card } from '@/components/ui/card'
 import { DEAL_COLUMNS, DealRow } from '@/features/deals/components/DealRow'
-import type { AuthUser } from '@/features/auth/types/auth.types'
-import type { Customer } from '@/features/customers/types/customer.types'
-import type { Pipeline } from '@/features/pipelines/types/pipeline.types'
-import type { PipelineStage } from '@/features/pipelines/types/pipelineStage.types'
 import type { Deal } from '@/features/deals/types/deal.types'
 
 export function DealList({
   deals,
-  customers,
-  pipelines,
-  stages,
-  owners,
+  customerNames,
+  pipelineNames,
+  stageNames,
+  ownerNames,
   onEdit,
   onDelete,
 }: {
   deals: Deal[]
-  customers: Customer[]
-  pipelines: Pipeline[]
-  stages: PipelineStage[]
-  owners: AuthUser[]
+  customerNames: Map<string, string>
+  pipelineNames: Map<string, string>
+  stageNames: Map<string, string>
+  ownerNames: Map<string, string>
   onEdit: (deal: Deal) => void
   onDelete: (deal: Deal) => void
 }) {
-  const customerNames = new Map(
-    customers.map((customer) => [customer._id, customer.companyName])
-  )
-  const pipelineNames = new Map(
-    pipelines.map((pipeline) => [pipeline._id, pipeline.name])
-  )
-  const stageNames = new Map(
-    stages.map((stage) => [stage._id, stage.name])
-  )
-  const ownerNames = new Map(
-    owners.map((owner) => [owner._id, `${owner.firstName} ${owner.lastName}`])
-  )
-
   return (
     <Card>
       <div

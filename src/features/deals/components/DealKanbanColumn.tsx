@@ -6,30 +6,26 @@ import {
 import { cn } from '@/lib/utils'
 import { DealKanbanCard } from '@/features/deals/components/DealKanbanCard'
 import type { AuthUser } from '@/features/auth/types/auth.types'
-import type { Customer } from '@/features/customers/types/customer.types'
 import type { Deal } from '@/features/deals/types/deal.types'
 import type { PipelineStage } from '@/features/pipelines/types/pipelineStage.types'
 
 export function DealKanbanColumn({
   stage,
   deals,
-  customers,
+  customerNames,
   owners,
   onEdit,
   onDelete,
 }: {
   stage: PipelineStage
   deals: Deal[]
-  customers: Customer[]
+  customerNames: Map<string, string>
   owners: AuthUser[]
   onEdit: (deal: Deal) => void
   onDelete: (deal: Deal) => void
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: stage._id })
 
-  const customerNames = new Map(
-    customers.map((customer) => [customer._id, customer.companyName])
-  )
   const ownerNames = new Map(
     owners.map((owner) => [owner._id, `${owner.firstName} ${owner.lastName}`])
   )
