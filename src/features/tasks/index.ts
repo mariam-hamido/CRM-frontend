@@ -1,4 +1,6 @@
 export * from '@/features/tasks/api/taskApi'
+export * from '@/features/tasks/components'
+export * from '@/features/tasks/constants/taskLabels'
 export * from '@/features/tasks/hooks/taskKeys'
 export * from '@/features/tasks/hooks/useCancelTask'
 export * from '@/features/tasks/hooks/useCompleteTask'

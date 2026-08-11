@@ -19,6 +19,17 @@ export const DEFAULT_TASK_FORM_VALUES: TaskCreateFormValues = {
   deal: '',
 }
 
+export function formatTaskDate(value?: string) {
+  if (!value) return '—'
+  return new Date(value).toLocaleString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
+}
+
 function isoToDatetimeLocal(value: string): string {
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return ''
