@@ -21,5 +21,8 @@ export function useCompleteTask() {
       void queryClient.invalidateQueries({ queryKey: tasksQueryKey })
       toast.success('Task completed successfully.')
     },
+    onError: (error) => {
+      toast.error(error.message)
+    },
   })
 }

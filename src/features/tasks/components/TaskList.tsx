@@ -11,6 +11,10 @@ export function TaskList({
   onDelete,
   onComplete,
   onCancel,
+  canEdit,
+  canDelete,
+  canComplete,
+  canCancel,
 }: {
   tasks: Task[]
   customerNames: Map<string, string>
@@ -20,6 +24,10 @@ export function TaskList({
   onDelete: (task: Task) => void
   onComplete?: (task: Task) => void
   onCancel?: (task: Task) => void
+  canEdit?: (task: Task) => boolean
+  canDelete?: (task: Task) => boolean
+  canComplete?: (task: Task) => boolean
+  canCancel?: (task: Task) => boolean
 }) {
   return (
     <Card>
@@ -48,6 +56,10 @@ export function TaskList({
             onDelete={onDelete}
             onComplete={onComplete}
             onCancel={onCancel}
+            canEdit={canEdit?.(task)}
+            canDelete={canDelete?.(task)}
+            canComplete={canComplete?.(task)}
+            canCancel={canCancel?.(task)}
           />
         ))}
       </ul>

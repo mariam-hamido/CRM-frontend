@@ -27,16 +27,31 @@ function TaskActions({
   onDelete,
   onComplete,
   onCancel,
+  canEdit = true,
+  canDelete = true,
+  canComplete = true,
+  canCancel = true,
 }: {
   task: Task
   onEdit: (task: Task) => void
   onDelete: (task: Task) => void
   onComplete?: (task: Task) => void
   onCancel?: (task: Task) => void
+  canEdit?: boolean
+  canDelete?: boolean
+  canComplete?: boolean
+  canCancel?: boolean
 }) {
-  const showComplete = Boolean(onComplete) && task.status !== 'completed'
-  const showCancel = Boolean(onCancel) && task.status !== 'cancelled'
-  const showDivider = showComplete || showCancel
+  const showComplete =
+    canComplete && Boolean(onComplete) && task.status !== 'completed'
+  const showCancel =
+    canCancel && Boolean(onCancel) && task.status !== 'cancelled'
+  const showEdit = canEdit
+  const showDelete = canDelete
+
+  if (!showComplete && !showCancel && !showEdit && !showDelete) {
+    return null
+  }
 
   return (
     <DropdownMenu>
@@ -51,28 +66,34 @@ function TaskActions({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {showComplete ? (
+        {onComplete && showComplete ? (
           <DropdownMenuItem onSelect={() => onComplete(task)}>
             <CircleCheck aria-hidden="true" />
             Mark complete
           </DropdownMenuItem>
         ) : null}
-        {showCancel ? (
+        {onCancel && showCancel ? (
           <DropdownMenuItem onSelect={() => onCancel(task)}>
             <CircleX aria-hidden="true" />
             Cancel task
           </DropdownMenuItem>
         ) : null}
-        {showDivider ? <DropdownMenuSeparator /> : null}
-        <DropdownMenuItem onSelect={() => onEdit(task)}>
-          <Pencil aria-hidden="true" />
-          Edit
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive" onSelect={() => onDelete(task)}>
-          <Trash2 aria-hidden="true" />
-          Delete
-        </DropdownMenuItem>
+        {(showComplete || showCancel) && (showEdit || showDelete) ? (
+          <DropdownMenuSeparator />
+        ) : null}
+        {showEdit ? (
+          <DropdownMenuItem onSelect={() => onEdit(task)}>
+            <Pencil aria-hidden="true" />
+            Edit
+          </DropdownMenuItem>
+        ) : null}
+        {showEdit && showDelete ? <DropdownMenuSeparator /> : null}
+        {showDelete ? (
+          <DropdownMenuItem variant="destructive" onSelect={() => onDelete(task)}>
+            <Trash2 aria-hidden="true" />
+            Delete
+          </DropdownMenuItem>
+        ) : null}
       </DropdownMenuContent>
     </DropdownMenu>
   )
@@ -87,6 +108,10 @@ export function TaskRow({
   onDelete,
   onComplete,
   onCancel,
+  canEdit,
+  canDelete,
+  canComplete,
+  canCancel,
 }: {
   task: Task
   customerName?: string
@@ -96,6 +121,10 @@ export function TaskRow({
   onDelete: (task: Task) => void
   onComplete?: (task: Task) => void
   onCancel?: (task: Task) => void
+  canEdit?: boolean
+  canDelete?: boolean
+  canComplete?: boolean
+  canCancel?: boolean
 }) {
   const relationship = [customerName, dealName].filter(Boolean).join(' · ')
   const actions = (
@@ -105,6 +134,10 @@ export function TaskRow({
       onDelete={onDelete}
       onComplete={onComplete}
       onCancel={onCancel}
+      canEdit={canEdit}
+      canDelete={canDelete}
+      canComplete={canComplete}
+      canCancel={canCancel}
     />
   )
 

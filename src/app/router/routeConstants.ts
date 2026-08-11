@@ -9,6 +9,7 @@ export const ROUTES = {
   leads: '/leads',
   deals: '/deals',
   dealsDetail: '/deals/:id',
+  tasks: '/tasks',
   pipelines: '/pipelines',
   settings: '/settings',
   notFound: '*',

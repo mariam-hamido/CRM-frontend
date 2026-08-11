@@ -23,6 +23,7 @@ import {
   TASK_PRIORITIES,
   TASK_STATUSES,
   type Task,
+  type TaskStatus,
 } from '@/features/tasks/types/task.types'
 import {
   DEFAULT_TASK_FORM_VALUES,
@@ -33,7 +34,7 @@ export type TaskFormValues = TaskCreateFormValues | TaskUpdateFormValues
 
 type TaskFormFieldValues = TaskCreateFormValues & TaskUpdateFormValues
 
-const MANUAL_TASK_STATUSES = TASK_STATUSES.filter(
+const MANUAL_TASK_STATUSES: TaskStatus[] = TASK_STATUSES.filter(
   (status) =>
     status !== 'completed' && status !== 'cancelled' && status !== 'overdue'
 )

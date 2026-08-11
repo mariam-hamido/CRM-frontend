@@ -83,10 +83,9 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'tasks',
     label: 'Tasks',
-    path: '/tasks',
+    path: ROUTES.tasks,
     icon: CalendarDays,
     section: 'activity',
-    disabled: true,
   },
   {
     id: 'meetings',

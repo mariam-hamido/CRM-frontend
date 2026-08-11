@@ -21,5 +21,8 @@ export function useCancelTask() {
       void queryClient.invalidateQueries({ queryKey: tasksQueryKey })
       toast.success('Task cancelled successfully.')
     },
+    onError: (error) => {
+      toast.error(error.message)
+    },
   })
 }
