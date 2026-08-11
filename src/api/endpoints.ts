@@ -28,6 +28,13 @@ export const DEALS = {
   LOST: (id: string) => `/deals/${id}/lost`,
 } as const
 
+export const TASKS = {
+  BASE: '/tasks',
+  DETAIL: (id: string) => `/tasks/${id}`,
+  COMPLETE: (id: string) => `/tasks/${id}/complete`,
+  CANCEL: (id: string) => `/tasks/${id}/cancel`,
+} as const
+
 export const PIPELINES = {
   BASE: '/pipelines',
   DETAIL: (id: string) => `/pipelines/${id}`,
