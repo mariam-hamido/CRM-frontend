@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { ROUTES } from '@/app/router/routeConstants'
 import {
   CircleCheck,
   CircleX,
@@ -146,7 +148,14 @@ export function TaskRow({
       <div
         className={`hidden items-center gap-4 px-4 py-3 sm:px-6 md:grid ${TASK_COLUMNS}`}
       >
-        <div className="min-w-0 truncate font-medium">{task.title}</div>
+        <div className="min-w-0">
+          <Link
+            to={ROUTES.tasksDetail.replace(':id', task._id)}
+            className="block min-w-0 truncate font-medium hover:text-primary hover:underline"
+          >
+            {task.title}
+          </Link>
+        </div>
         <div className="hidden min-w-0 truncate text-muted-foreground lg:block">
           {relationship || '—'}
         </div>
@@ -168,7 +177,12 @@ export function TaskRow({
       <div className="flex flex-col gap-2 px-4 py-3 sm:px-6 md:hidden">
         <div className="flex items-start justify-between gap-3">
           <div className="flex min-w-0 flex-col gap-1">
-            <p className="truncate font-medium">{task.title}</p>
+            <Link
+              to={ROUTES.tasksDetail.replace(':id', task._id)}
+              className="block truncate font-medium hover:text-primary hover:underline"
+            >
+              {task.title}
+            </Link>
             {relationship ? (
               <p className="truncate text-sm text-muted-foreground">
                 {relationship}

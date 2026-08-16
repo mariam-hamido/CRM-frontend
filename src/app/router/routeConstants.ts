@@ -10,6 +10,7 @@ export const ROUTES = {
   deals: '/deals',
   dealsDetail: '/deals/:id',
   tasks: '/tasks',
+  tasksDetail: '/tasks/:id',
   pipelines: '/pipelines',
   settings: '/settings',
   notFound: '*',

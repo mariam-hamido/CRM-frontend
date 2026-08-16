@@ -17,6 +17,7 @@ import {
   NotFoundPage,
   PipelinesPage,
   RegisterPage,
+  TaskDetailPage,
   TasksPage,
 } from '@/app/router/lazyPages'
 import { ROUTES } from '@/app/router/routeConstants'
@@ -120,6 +121,14 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <TasksPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.tasksDetail,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <TaskDetailPage />
               </Suspense>
             ),
           },
