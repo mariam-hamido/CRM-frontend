@@ -12,6 +12,7 @@ const PRIORITY_VARIANT: Record<TaskPriority, BadgeProps['variant']> = {
   high: 'destructive',
   medium: 'outline',
   low: 'secondary',
+  urgent: 'destructive',
 }
 
 export function TaskList({

@@ -18,7 +18,8 @@ const ACCENT_STYLES = {
 
 export function StatsCard({ item }: { item: StatItem }) {
   const Icon = item.icon
-  const TrendIcon = item.trend.direction === 'up' ? ArrowUpRight : ArrowDownRight
+  const TrendIcon =
+    item.trend?.direction === 'up' ? ArrowUpRight : ArrowDownRight
 
   return (
     <Card>
@@ -39,18 +40,20 @@ export function StatsCard({ item }: { item: StatItem }) {
       </CardHeader>
       <CardContent className="flex flex-col">
         <div className="text-3xl font-semibold tracking-tight">{item.value}</div>
-        <div className="mt-2 flex items-center gap-1.5 text-xs">
-          <span
-            className={cn(
-              'inline-flex items-center gap-0.5 font-medium',
-              item.trend.direction === 'down' && 'text-destructive'
-            )}
-          >
-            <TrendIcon className="size-3.5" aria-hidden="true" />
-            {item.trend.value}
-          </span>
-          <span className="text-muted-foreground">{item.trend.label}</span>
-        </div>
+        {item.trend ? (
+          <div className="mt-2 flex items-center gap-1.5 text-xs">
+            <span
+              className={cn(
+                'inline-flex items-center gap-0.5 font-medium',
+                item.trend.direction === 'down' && 'text-destructive'
+              )}
+            >
+              <TrendIcon className="size-3.5" aria-hidden="true" />
+              {item.trend.value}
+            </span>
+            <span className="text-muted-foreground">{item.trend.label}</span>
+          </div>
+        ) : null}
       </CardContent>
     </Card>
   )

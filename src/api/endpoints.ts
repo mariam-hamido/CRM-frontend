@@ -35,6 +35,15 @@ export const TASKS = {
   CANCEL: (id: string) => `/tasks/${id}/cancel`,
 } as const
 
+export const DASHBOARD = {
+  OVERVIEW: '/dashboard/overview',
+  PIPELINE: '/dashboard/pipeline',
+  SALES: '/dashboard/sales',
+  TASKS: '/dashboard/tasks',
+  MEETINGS: '/dashboard/meetings',
+  RECENT_ACTIVITIES: '/dashboard/recent-activities',
+} as const
+
 export const PIPELINES = {
   BASE: '/pipelines',
   DETAIL: (id: string) => `/pipelines/${id}`,

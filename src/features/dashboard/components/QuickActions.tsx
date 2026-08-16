@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import type { QuickActionItem } from '@/features/dashboard/constants/mockData'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -10,6 +11,8 @@ export function QuickActions({
   actions: QuickActionItem[]
   className?: string
 }) {
+  const navigate = useNavigate()
+
   return (
     <Card className={cn('h-full', className)}>
       <CardHeader>
@@ -23,6 +26,7 @@ export function QuickActions({
               key={action.id}
               variant={action.variant}
               className="justify-start"
+              onClick={action.path ? () => navigate(action.path!) : undefined}
             >
               <Icon />
               {action.label}

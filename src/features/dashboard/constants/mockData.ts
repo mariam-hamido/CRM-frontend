@@ -20,7 +20,7 @@ export interface StatItem {
   value: string
   icon: LucideIcon
   accent: StatAccent
-  trend: {
+  trend?: {
     direction: TrendDirection
     value: string
     label: string
@@ -37,7 +37,7 @@ export interface ActivityItem {
   timestamp: string
 }
 
-export type TaskPriority = 'high' | 'medium' | 'low'
+export type TaskPriority = 'high' | 'medium' | 'low' | 'urgent'
 
 export interface TaskItem {
   id: string
@@ -53,6 +53,7 @@ export interface QuickActionItem {
   label: string
   icon: LucideIcon
   variant: QuickActionVariant
+  path?: string
 }
 
 export const STATS_MOCK: StatItem[] = [
@@ -96,18 +97,21 @@ export const QUICK_ACTIONS_MOCK: QuickActionItem[] = [
     label: 'Add Customer',
     icon: UserPlus,
     variant: 'default',
+    path: '/customers',
   },
   {
     id: 'create-lead',
     label: 'Create Lead',
     icon: UserRoundPlus,
     variant: 'outline',
+    path: '/leads',
   },
   {
     id: 'new-deal',
     label: 'New Deal',
     icon: FilePlus2,
     variant: 'outline',
+    path: '/deals',
   },
   {
     id: 'schedule-meeting',
