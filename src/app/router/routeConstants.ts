@@ -4,6 +4,7 @@ export const ROUTES = {
   register: '/register',
   dashboard: '/dashboard',
   companies: '/companies',
+  contacts: '/contacts',
   customers: '/customers',
   customersDetail: '/customers/:id',
   leads: '/leads',

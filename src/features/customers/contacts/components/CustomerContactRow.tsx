@@ -15,6 +15,9 @@ import { contactToFormValues } from '@/features/customers/contacts/utils/custome
 export const CONTACT_COLUMNS =
   'md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.2fr)_minmax(0,1.4fr)_minmax(0,1.2fr)_auto_auto]'
 
+export const CONTACT_COLUMNS_WITH_CUSTOMER =
+  'md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_minmax(0,1.2fr)_minmax(0,1.4fr)_minmax(0,1.2fr)_auto_auto]'
+
 function contactDisplayName(contact: CustomerContact) {
   return contact.fullName || `${contact.firstName} ${contact.lastName}`
 }
@@ -87,10 +90,12 @@ function ContactActions({
 
 export function CustomerContactRow({
   contact,
+  customerName,
   onEdit,
   onDelete,
 }: {
   contact: CustomerContact
+  customerName?: string
   onEdit: (contact: CustomerContact) => void
   onDelete: (contact: CustomerContact) => void
 }) {
@@ -99,8 +104,13 @@ export function CustomerContactRow({
   return (
     <li className="border-b transition-colors last:border-0 hover:bg-muted/50">
       <div
-        className={`hidden gap-4 px-4 py-3 sm:px-6 md:grid ${CONTACT_COLUMNS}`}
+        className={`hidden gap-4 px-4 py-3 sm:px-6 md:grid ${customerName !== undefined ? CONTACT_COLUMNS_WITH_CUSTOMER : CONTACT_COLUMNS}`}
       >
+        {customerName !== undefined ? (
+          <div className="min-w-0 truncate text-muted-foreground">
+            {customerName || '—'}
+          </div>
+        ) : null}
         <div className="min-w-0 truncate font-medium">{name}</div>
         <div className="min-w-0 truncate text-muted-foreground">
           {contact.jobTitle ?? '—'}
@@ -137,7 +147,14 @@ export function CustomerContactRow({
             {contact.phone ? <p className="truncate">{contact.phone}</p> : null}
           </div>
         ) : null}
-        <CustomerContactPrimaryBadge isPrimary={contact.isPrimary} />
+        <div className="flex flex-wrap items-center gap-2">
+          <CustomerContactPrimaryBadge isPrimary={contact.isPrimary} />
+          {customerName !== undefined ? (
+            <span className="truncate text-sm text-muted-foreground">
+              {customerName || '—'}
+            </span>
+          ) : null}
+        </div>
       </div>
     </li>
   )
