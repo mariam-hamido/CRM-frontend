@@ -44,6 +44,13 @@ export const DASHBOARD = {
   RECENT_ACTIVITIES: '/dashboard/recent-activities',
 } as const
 
+export const MEETINGS = {
+  BASE: '/meetings',
+  DETAIL: (id: string) => `/meetings/${id}`,
+  COMPLETE: (id: string) => `/meetings/${id}/complete`,
+  CANCEL: (id: string) => `/meetings/${id}/cancel`,
+} as const
+
 export const PIPELINES = {
   BASE: '/pipelines',
   DETAIL: (id: string) => `/pipelines/${id}`,
