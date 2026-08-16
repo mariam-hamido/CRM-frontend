@@ -10,6 +10,7 @@ export const CustomerDetailPage = lazy(() => import('@/features/customers/pages/
 export const LeadsPage = lazy(() => import('@/features/leads/pages/LeadsPage'))
 export const DealsPage = lazy(() => import('@/features/deals/pages/DealsPage'))
 export const DealDetailPage = lazy(() => import('@/features/deals/pages/DealDetailPage'))
+export const MeetingsPage = lazy(() => import('@/features/meetings/pages/MeetingsPage'))
 export const MeetingDetailPage = lazy(() => import('@/features/meetings/pages/MeetingDetailPage'))
 export const TasksPage = lazy(() => import('@/features/tasks/pages/TasksPage'))
 export const TaskDetailPage = lazy(() => import('@/features/tasks/pages/TaskDetailPage'))

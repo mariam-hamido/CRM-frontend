@@ -108,7 +108,7 @@ function MeetingActions({
 export function MeetingRow({
   meeting,
   customerName,
-  dealName,
+  dealName: _dealName,
   onEdit,
   onDelete,
   onComplete,

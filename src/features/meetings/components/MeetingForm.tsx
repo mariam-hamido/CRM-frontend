@@ -19,7 +19,6 @@ import {
   MEETING_STATUSES,
   MEETING_TYPES,
   type Meeting,
-  type MeetingStatus,
 } from '@/features/meetings/types/meeting.types'
 import {
   DEFAULT_MEETING_FORM_VALUES,
@@ -31,8 +30,6 @@ import type { Deal } from '@/features/deals/types/deal.types'
 export type MeetingFormValues = MeetingCreateFormValues | MeetingUpdateFormValues
 
 type MeetingFormFieldValues = MeetingCreateFormValues & MeetingUpdateFormValues
-
-const MANUAL_MEETING_STATUSES: MeetingStatus[] = ['scheduled']
 
 export function MeetingForm({
   meeting,
