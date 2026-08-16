@@ -9,6 +9,8 @@ export const ROUTES = {
   leads: '/leads',
   deals: '/deals',
   dealsDetail: '/deals/:id',
+  meetings: '/meetings',
+  meetingsDetail: '/meetings/:id',
   tasks: '/tasks',
   tasksDetail: '/tasks/:id',
   pipelines: '/pipelines',

@@ -90,10 +90,9 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'meetings',
     label: 'Meetings',
-    path: '/meetings',
+    path: ROUTES.meetings,
     icon: UserRound,
     section: 'activity',
-    disabled: true,
   },
   {
     id: 'notifications',
