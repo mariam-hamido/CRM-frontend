@@ -30,6 +30,16 @@ export async function getCustomerContactsByCustomer(
   return response.data
 }
 
+export async function getGlobalCustomerContacts(
+  params: ContactListParams = {}
+): Promise<ContactListResponse> {
+  const response = await apiClient.get<ContactListResponse>(
+    CUSTOMER_CONTACTS.BASE,
+    { params }
+  )
+  return response.data
+}
+
 export async function getCustomerContact(
   id: string
 ): Promise<ContactResponse> {
