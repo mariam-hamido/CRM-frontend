@@ -7,8 +7,12 @@ import type { Notification } from '@/features/notifications/types/notification.t
 
 export function NotificationList({
   notifications,
+  onMarkRead,
+  onDelete,
 }: {
   notifications: Notification[]
+  onMarkRead?: (notification: Notification) => void
+  onDelete: (notification: Notification) => void
 }) {
   return (
     <Card>
@@ -29,6 +33,8 @@ export function NotificationList({
           <NotificationRow
             key={notification._id}
             notification={notification}
+            onMarkRead={onMarkRead}
+            onDelete={onDelete}
           />
         ))}
       </ul>

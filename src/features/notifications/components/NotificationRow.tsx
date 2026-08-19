@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CircleCheck, MoreHorizontal, Trash2 } from 'lucide-react'
 import {
@@ -9,62 +8,55 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { NotificationDeleteDialog } from '@/features/notifications/components/NotificationDeleteDialog'
 import { NotificationStatusBadge } from '@/features/notifications/components/NotificationStatusBadge'
 import { NotificationTypeBadge } from '@/features/notifications/components/NotificationTypeBadge'
 import { NOTIFICATION_ENTITY_TYPE_LABELS } from '@/features/notifications/constants/notificationLabels'
-import { useMarkNotificationRead } from '@/features/notifications/hooks/useMarkNotificationRead'
 import type { Notification } from '@/features/notifications/types/notification.types'
 import { formatNotificationDate } from '@/features/notifications/utils/notificationUtils'
 
 export const NOTIFICATION_COLUMNS =
   'md:grid-cols-[minmax(0,1.6fr)_auto_auto_minmax(0,1.2fr)_minmax(0,1fr)_auto]'
 
-function NotificationActions({ notification }: { notification: Notification }) {
-  const markRead = useMarkNotificationRead()
-  const [deleteOpen, setDeleteOpen] = useState(false)
-
-  const showMarkRead = !notification.isRead
+function NotificationActions({
+  notification,
+  onMarkRead,
+  onDelete,
+}: {
+  notification: Notification
+  onMarkRead?: (notification: Notification) => void
+  onDelete: (notification: Notification) => void
+}) {
+  const showMarkRead = !notification.isRead && Boolean(onMarkRead)
 
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            aria-label={`Actions for ${notification.title}`}
-          >
-            <MoreHorizontal aria-hidden="true" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          {showMarkRead ? (
-            <DropdownMenuItem
-              onSelect={() => markRead.mutate(notification._id)}
-              disabled={markRead.isPending}
-            >
-              <CircleCheck aria-hidden="true" />
-              Mark as read
-            </DropdownMenuItem>
-          ) : null}
-          {showMarkRead ? <DropdownMenuSeparator /> : null}
-          <DropdownMenuItem
-            variant="destructive"
-            onSelect={() => setDeleteOpen(true)}
-          >
-            <Trash2 aria-hidden="true" />
-            Delete
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label={`Actions for ${notification.title}`}
+        >
+          <MoreHorizontal aria-hidden="true" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {showMarkRead ? (
+          <DropdownMenuItem onSelect={() => onMarkRead?.(notification)}>
+            <CircleCheck aria-hidden="true" />
+            Mark as read
           </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <NotificationDeleteDialog
-        notification={notification}
-        open={deleteOpen}
-        onOpenChange={setDeleteOpen}
-      />
-    </>
+        ) : null}
+        {showMarkRead ? <DropdownMenuSeparator /> : null}
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={() => onDelete(notification)}
+        >
+          <Trash2 aria-hidden="true" />
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 
@@ -133,8 +125,12 @@ function NotificationRelated({
 
 export function NotificationRow({
   notification,
+  onMarkRead,
+  onDelete,
 }: {
   notification: Notification
+  onMarkRead?: (notification: Notification) => void
+  onDelete: (notification: Notification) => void
 }) {
   const rowBackground = notification.isRead ? '' : 'bg-muted/30'
 
@@ -159,7 +155,11 @@ export function NotificationRow({
           {formatNotificationDate(notification.createdAt)}
         </div>
         <div className="flex justify-end">
-          <NotificationActions notification={notification} />
+          <NotificationActions
+            notification={notification}
+            onMarkRead={onMarkRead}
+            onDelete={onDelete}
+          />
         </div>
       </div>
 
@@ -170,7 +170,11 @@ export function NotificationRow({
           <div className="min-w-0">
             <NotificationTitle notification={notification} />
           </div>
-          <NotificationActions notification={notification} />
+          <NotificationActions
+            notification={notification}
+            onMarkRead={onMarkRead}
+            onDelete={onDelete}
+          />
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <NotificationTypeBadge type={notification.type} />
