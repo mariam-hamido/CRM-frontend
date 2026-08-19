@@ -11,10 +11,14 @@ export function customerContactsListQueryKey(
   return [...customerContactsQueryKey(customerId), params] as const
 }
 
+export function globalContactsQueryKey() {
+  return ['customer-contacts', 'global'] as const
+}
+
 export function globalContactsListQueryKey(
   params: ContactListParams = {}
 ) {
-  return ['customer-contacts', 'global', params] as const
+  return [...globalContactsQueryKey(), params] as const
 }
 
 export function contactDetailQueryKey(contactId: string | undefined) {

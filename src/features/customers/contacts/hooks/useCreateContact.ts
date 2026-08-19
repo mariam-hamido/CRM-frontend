@@ -2,7 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import type { ApiError } from '@/api/interceptors'
 import { createCustomerContact } from '@/features/customers/contacts/api/customerContactApi'
-import { customerContactsQueryKey } from '@/features/customers/contacts/hooks/customerContactKeys'
+import {
+  customerContactsQueryKey,
+  globalContactsQueryKey,
+} from '@/features/customers/contacts/hooks/customerContactKeys'
 import type { CustomerContactFormValues } from '@/features/customers/contacts/schemas/customerContact.schema'
 import type { CustomerContact } from '@/features/customers/contacts/types/customerContact.types'
 import {
@@ -25,6 +28,9 @@ export function useCreateContact() {
     onSuccess: (_contact, variables) => {
       void queryClient.invalidateQueries({
         queryKey: customerContactsQueryKey(variables.customerId),
+      })
+      void queryClient.invalidateQueries({
+        queryKey: globalContactsQueryKey(),
       })
       toast.success('Contact created successfully.')
     },

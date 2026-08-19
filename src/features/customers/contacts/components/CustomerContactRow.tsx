@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom'
 import { MoreHorizontal, Pencil, Star, StarOff, Trash2 } from 'lucide-react'
+import { ROUTES } from '@/app/router/routeConstants'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,6 +16,8 @@ import { contactToFormValues } from '@/features/customers/contacts/utils/custome
 
 export const CONTACT_COLUMNS =
   'md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.2fr)_minmax(0,1.4fr)_minmax(0,1.2fr)_auto_auto]'
+export const CONTACT_COLUMNS_WITH_CUSTOMER =
+  'md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.4fr)_minmax(0,1.2fr)_minmax(0,1.4fr)_minmax(0,1.2fr)_auto_auto]'
 
 function contactDisplayName(contact: CustomerContact) {
   return contact.fullName || `${contact.firstName} ${contact.lastName}`
@@ -85,23 +89,56 @@ function ContactActions({
   )
 }
 
+function CustomerNameCell({
+  customerName,
+  customerId,
+}: {
+  customerName?: string
+  customerId: string
+}) {
+  if (!customerName) return '—'
+  return (
+    <Link
+      to={ROUTES.customersDetail.replace(':id', customerId)}
+      className="hover:text-foreground hover:underline"
+    >
+      {customerName}
+    </Link>
+  )
+}
+
 export function CustomerContactRow({
   contact,
   onEdit,
   onDelete,
+  showCustomer = false,
+  customerName,
 }: {
   contact: CustomerContact
   onEdit: (contact: CustomerContact) => void
   onDelete: (contact: CustomerContact) => void
+  showCustomer?: boolean
+  customerName?: string
 }) {
   const name = contactDisplayName(contact)
+  const gridColumns = showCustomer
+    ? CONTACT_COLUMNS_WITH_CUSTOMER
+    : CONTACT_COLUMNS
 
   return (
     <li className="border-b transition-colors last:border-0 hover:bg-muted/50">
       <div
-        className={`hidden gap-4 px-4 py-3 sm:px-6 md:grid ${CONTACT_COLUMNS}`}
+        className={`hidden gap-4 px-4 py-3 sm:px-6 md:grid ${gridColumns}`}
       >
         <div className="min-w-0 truncate font-medium">{name}</div>
+        {showCustomer ? (
+          <div className="hidden min-w-0 truncate text-muted-foreground lg:block">
+            <CustomerNameCell
+              customerName={customerName}
+              customerId={contact.customer}
+            />
+          </div>
+        ) : null}
         <div className="min-w-0 truncate text-muted-foreground">
           {contact.jobTitle ?? '—'}
         </div>
@@ -131,6 +168,14 @@ export function CustomerContactRow({
           </div>
           <ContactActions contact={contact} onEdit={onEdit} onDelete={onDelete} />
         </div>
+        {showCustomer ? (
+          <p className="truncate text-sm text-muted-foreground">
+            <CustomerNameCell
+              customerName={customerName}
+              customerId={contact.customer}
+            />
+          </p>
+        ) : null}
         {contact.email || contact.phone ? (
           <div className="flex flex-col gap-0.5 text-sm text-muted-foreground">
             {contact.email ? <p className="truncate">{contact.email}</p> : null}
