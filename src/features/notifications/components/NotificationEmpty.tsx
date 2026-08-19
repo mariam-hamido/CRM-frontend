@@ -1,0 +1,43 @@
+import { Bell, TriangleAlert } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+
+export function NotificationEmpty({
+  onClearFilters,
+  hasActiveFilters = false,
+}: {
+  onClearFilters?: () => void
+  hasActiveFilters?: boolean
+}) {
+  return (
+    <Card>
+      <CardContent className="flex flex-col items-center gap-3 py-12 text-center">
+        <div className="flex size-10 items-center justify-center rounded-full bg-muted">
+          {hasActiveFilters ? (
+            <TriangleAlert
+              className="size-5 text-muted-foreground"
+              aria-hidden="true"
+            />
+          ) : (
+            <Bell className="size-5 text-muted-foreground" aria-hidden="true" />
+          )}
+        </div>
+        <div className="flex flex-col gap-1">
+          <p className="font-medium">
+            {hasActiveFilters ? 'No notifications found' : 'No notifications yet'}
+          </p>
+          <p className="text-sm text-muted-foreground">
+            {hasActiveFilters
+              ? 'No notifications match your current filters. Try adjusting your search or filters.'
+              : 'Notifications will appear here when the system generates them.'}
+          </p>
+        </div>
+        {hasActiveFilters && onClearFilters ? (
+          <Button type="button" variant="outline" onClick={onClearFilters}>
+            Clear filters
+          </Button>
+        ) : null}
+      </CardContent>
+    </Card>
+  )
+}
