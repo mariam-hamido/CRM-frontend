@@ -51,6 +51,14 @@ export const MEETINGS = {
   CANCEL: (id: string) => `/meetings/${id}/cancel`,
 } as const
 
+export const NOTIFICATIONS = {
+  BASE: '/notifications',
+  DETAIL: (id: string) => `/notifications/${id}`,
+  READ: (id: string) => `/notifications/${id}/read`,
+  READ_ALL: '/notifications/read-all',
+  UNREAD_COUNT: '/notifications/unread-count',
+} as const
+
 export const PIPELINES = {
   BASE: '/pipelines',
   DETAIL: (id: string) => `/pipelines/${id}`,
