@@ -9,16 +9,6 @@ import type {
   UpdateContactPayload,
 } from '@/features/customers/contacts/types/customerContact.types'
 
-export async function getContacts(
-  params: ContactListParams = {}
-): Promise<ContactListResponse> {
-  const response = await apiClient.get<ContactListResponse>(
-    CUSTOMER_CONTACTS.BASE,
-    { params }
-  )
-  return response.data
-}
-
 export async function createCustomerContact(
   data: CreateContactPayload
 ): Promise<ContactResponse> {

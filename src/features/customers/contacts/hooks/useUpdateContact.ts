@@ -5,7 +5,6 @@ import { updateCustomerContact } from '@/features/customers/contacts/api/custome
 import {
   contactDetailQueryKey,
   customerContactsQueryKey,
-  globalContactsQueryKey,
 } from '@/features/customers/contacts/hooks/customerContactKeys'
 import type { CustomerContactFormValues } from '@/features/customers/contacts/schemas/customerContact.schema'
 import type { CustomerContact } from '@/features/customers/contacts/types/customerContact.types'
@@ -33,9 +32,6 @@ export function useUpdateContact() {
       )
       void queryClient.invalidateQueries({
         queryKey: customerContactsQueryKey(contact.customer),
-      })
-      void queryClient.invalidateQueries({
-        queryKey: globalContactsQueryKey(),
       })
       toast.success('Contact updated successfully.')
     },

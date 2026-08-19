@@ -5,7 +5,6 @@ import { deleteCustomerContact } from '@/features/customers/contacts/api/custome
 import {
   contactDetailQueryKey,
   customerContactsQueryKey,
-  globalContactsQueryKey,
 } from '@/features/customers/contacts/hooks/customerContactKeys'
 
 export function useDeleteContact() {
@@ -22,9 +21,6 @@ export function useDeleteContact() {
       })
       void queryClient.invalidateQueries({
         queryKey: customerContactsQueryKey(variables.customerId),
-      })
-      void queryClient.invalidateQueries({
-        queryKey: globalContactsQueryKey(),
       })
       toast.success('Contact deleted successfully.')
     },

@@ -54,9 +54,10 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'contacts',
     label: 'Contacts',
-    path: ROUTES.contacts,
+    path: '/contacts',
     icon: Contact,
     section: 'management',
+    disabled: true,
   },
   {
     id: 'leads',
