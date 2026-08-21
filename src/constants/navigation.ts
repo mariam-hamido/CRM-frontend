@@ -96,10 +96,9 @@ export const NAVIGATION: NavItem[] = [
   {
     id: 'notifications',
     label: 'Notifications',
-    path: '/notifications',
+    path: ROUTES.notifications,
     icon: Bell,
     section: 'account',
-    disabled: true,
   },
   {
     id: 'settings',

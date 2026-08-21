@@ -18,6 +18,7 @@ import {
   MeetingsPage,
   LoginPage,
   NotFoundPage,
+  NotificationsPage,
   PipelinesPage,
   RegisterPage,
   TaskDetailPage,
@@ -164,6 +165,14 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <PipelinesPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.notifications,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <NotificationsPage />
               </Suspense>
             ),
           },

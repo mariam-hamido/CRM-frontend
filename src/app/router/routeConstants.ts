@@ -15,6 +15,7 @@ export const ROUTES = {
   tasks: '/tasks',
   tasksDetail: '/tasks/:id',
   pipelines: '/pipelines',
+  notifications: '/notifications',
   settings: '/settings',
   notFound: '*',
 } as const
