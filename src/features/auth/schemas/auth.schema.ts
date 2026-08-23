@@ -5,7 +5,16 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 })
 
-export const registerSchema = z.object({
+// Shared field rules for both registration flows. The backend performs the
+// authoritative checks (company existence/invitation for employees, global
+// email uniqueness); the frontend only validates shape.
+const registrationDetails = {
+  companyName: z
+    .string()
+    .trim()
+    .min(1, 'Company name is required')
+    .min(2, 'Company name must be between 2 and 100 characters')
+    .max(100, 'Company name must be between 2 and 100 characters'),
   firstName: z
     .string()
     .trim()
@@ -31,16 +40,15 @@ export const registerSchema = z.object({
     .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
     .regex(/[0-9]/, 'Password must contain at least one number')
     .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
-  company: z
-    .string()
-    .min(1, 'Company is required')
-    .regex(/^[a-f\d]{24}$/i, 'Company must be a valid MongoDB ObjectId'),
-  phone: z
-    .string()
-    .trim()
-    .optional()
-    .transform((value) => (value ? value : undefined)),
-})
+}
 
-export type LoginFormValues = z.infer<typeof loginSchema>
-export type RegisterFormValues = z.input<typeof registerSchema>
+// Company Admin First Registration payload.
+export const adminRegisterSchema = z.object(registrationDetails)
+
+// Employee First Registration payload - same fields; the backend resolves
+// the company by name and verifies a pending invitation for the email.
+export const employeeRegisterSchema = z.object(registrationDetails)
+
+// Both flows share identical form shapes, so forms can share one values type.
+export type RegistrationFormValues = z.input<typeof adminRegisterSchema>
+export type LoginFormValues = z.input<typeof loginSchema>

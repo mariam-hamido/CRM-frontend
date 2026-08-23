@@ -5,6 +5,7 @@ import { PublicLayout } from '@/app/layouts/PublicLayout'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { ProtectedRoute, PublicRoute } from '@/app/router/guards'
 import {
+  AdminRegisterPage,
   CompaniesPage,
   CompanySettingsPage,
   ContactsPage,
@@ -13,6 +14,7 @@ import {
   DashboardPage,
   DealDetailPage,
   DealsPage,
+  EmployeeRegisterPage,
   LeadsPage,
   MeetingDetailPage,
   MeetingsPage,
@@ -51,6 +53,22 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <RegisterPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.registerAdmin,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <AdminRegisterPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.registerEmployee,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <EmployeeRegisterPage />
               </Suspense>
             ),
           },

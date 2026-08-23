@@ -1,6 +1,8 @@
 export const AUTH = {
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
+  REGISTER_ADMIN: '/auth/register/admin',
+  REGISTER_EMPLOYEE: '/auth/register/employee',
 } as const
 
 export const COMPANIES = {

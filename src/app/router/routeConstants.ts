@@ -2,6 +2,8 @@ export const ROUTES = {
   home: '/',
   login: '/login',
   register: '/register',
+  registerAdmin: '/register/admin',
+  registerEmployee: '/register/employee',
   dashboard: '/dashboard',
   companies: '/companies',
   customers: '/customers',

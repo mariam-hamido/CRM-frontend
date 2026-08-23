@@ -9,15 +9,25 @@ export interface LoginRequest {
   password: string
 }
 
-export interface RegisterRequest {
+// Company Admin First Registration - creates a NEW company plus its admin.
+// The backend assigns role="admin" and derives the company identity from
+// companyName; clients never send role/company ids.
+export interface AdminRegisterRequest {
+  companyName: string
   firstName: string
   lastName: string
   email: string
   password: string
-  company: string
-  phone?: string
-  avatar?: string
-  role?: UserRole
+}
+
+// Employee First Registration - requires an admin-created invitation for
+// (companyName, email) to exist and be pending on the backend.
+export interface EmployeeRegisterRequest {
+  companyName: string
+  firstName: string
+  lastName: string
+  email: string
+  password: string
 }
 
 export interface AuthUser {
@@ -37,7 +47,10 @@ export interface AuthUser {
 
 export type LoginResponse = ApiResponse<{ user: AuthUser; token: string }>
 
-export type RegisterResponse = ApiResponse<AuthUser>
+// Neither registration flow returns a token; users sign in afterwards.
+export type AdminRegisterResponse = ApiResponse<AuthUser>
+
+export type EmployeeRegisterResponse = ApiResponse<AuthUser>
 
 export interface AuthErrorDetail {
   field: string
