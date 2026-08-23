@@ -8,6 +8,7 @@ export const ROUTES = {
   companies: '/companies',
   customers: '/customers',
   customersDetail: '/customers/:id',
+  employees: '/employees',
   contacts: '/contacts',
   leads: '/leads',
   deals: '/deals',

@@ -1,4 +1,5 @@
 import { getNavSections } from '@/constants/navigation'
+import { selectUser, useAuthStore } from '@/features/auth/store/authStore'
 import { SidebarFooter } from '@/components/layout/SidebarFooter'
 import { SidebarHeader } from '@/components/layout/SidebarHeader'
 import { SidebarSection } from '@/components/layout/SidebarSection'
@@ -11,7 +12,8 @@ export function Sidebar({
   collapsed: boolean
   onToggle: () => void
 }) {
-  const sections = getNavSections()
+  const user = useAuthStore(selectUser)
+  const sections = getNavSections(user?.role)
 
   return (
     <aside

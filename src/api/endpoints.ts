@@ -10,6 +10,11 @@ export const COMPANIES = {
   ME: '/companies/me',
 } as const
 
+export const EMPLOYEES = {
+  BASE: '/company-employees',
+  REMOVE: (id: string) => `/company-employees/${id}/remove`,
+} as const
+
 export const CUSTOMERS = {
   BASE: '/customers',
 } as const

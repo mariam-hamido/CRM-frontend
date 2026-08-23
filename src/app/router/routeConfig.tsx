@@ -15,6 +15,7 @@ import {
   DealDetailPage,
   DealsPage,
   EmployeeRegisterPage,
+  EmployeesPage,
   LeadsPage,
   MeetingDetailPage,
   MeetingsPage,
@@ -103,6 +104,14 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <CustomersPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.employees,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <EmployeesPage />
               </Suspense>
             ),
           },

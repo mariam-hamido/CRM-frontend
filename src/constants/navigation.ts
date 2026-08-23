@@ -8,6 +8,7 @@ import {
   ListChecks,
   Settings,
   Users,
+  UserCog,
   UserRound,
   Workflow,
   type LucideIcon,
@@ -50,6 +51,14 @@ export const NAVIGATION: NavItem[] = [
     path: ROUTES.customers,
     icon: Users,
     section: 'management',
+  },
+  {
+    id: 'employees',
+    label: 'Employees',
+    path: ROUTES.employees,
+    icon: UserCog,
+    section: 'management',
+    allowedRoles: ['admin'],
   },
   {
     id: 'contacts',
@@ -123,10 +132,21 @@ export interface NavSectionGroup {
   items: NavItem[]
 }
 
-export function getNavSections(): NavSectionGroup[] {
+/**
+ * Groups navigation items by section. When `userRole` is provided, items
+ * declaring `allowedRoles` that do not include the role are hidden - a
+ * visibility/UX concern only; the backend remains the authorization boundary.
+ */
+export function getNavSections(userRole?: UserRole): NavSectionGroup[] {
   const groups = new Map<NavSection, NavItem[]>()
 
   for (const item of NAVIGATION) {
+    if (
+      item.allowedRoles &&
+      (!userRole || !item.allowedRoles.includes(userRole))
+    ) {
+      continue
+    }
     const section = item.section ?? 'main'
     const items = groups.get(section) ?? []
     items.push(item)
