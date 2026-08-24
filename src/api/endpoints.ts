@@ -15,6 +15,11 @@ export const EMPLOYEES = {
   REMOVE: (id: string) => `/company-employees/${id}/remove`,
 } as const
 
+export const INVITATIONS = {
+  BASE: '/company-invitations',
+  DETAIL: (id: string) => `/company-invitations/${id}`,
+} as const
+
 export const CUSTOMERS = {
   BASE: '/customers',
 } as const

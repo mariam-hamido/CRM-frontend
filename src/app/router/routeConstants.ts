@@ -9,6 +9,7 @@ export const ROUTES = {
   customers: '/customers',
   customersDetail: '/customers/:id',
   employees: '/employees',
+  invitations: '/invitations',
   contacts: '/contacts',
   leads: '/leads',
   deals: '/deals',

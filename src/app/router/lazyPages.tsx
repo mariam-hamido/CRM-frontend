@@ -14,6 +14,7 @@ export const CompanySettingsPage = lazy(() => import('@/features/companies/pages
 export const CustomersPage = lazy(() => import('@/features/customers/pages/CustomersPage'))
 export const CustomerDetailPage = lazy(() => import('@/features/customers/pages/CustomerDetailPage'))
 export const EmployeesPage = lazy(() => import('@/features/employees/pages/EmployeesPage'))
+export const InvitationsPage = lazy(() => import('@/features/invitations/pages/InvitationsPage'))
 export const ContactsPage = lazy(() => import('@/features/contacts/pages/ContactsPage'))
 export const LeadsPage = lazy(() => import('@/features/leads/pages/LeadsPage'))
 export const DealsPage = lazy(() => import('@/features/deals/pages/DealsPage'))
