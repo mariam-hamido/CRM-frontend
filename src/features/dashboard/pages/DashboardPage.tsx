@@ -7,6 +7,7 @@ import type {
 import { QUICK_ACTIONS_MOCK } from '@/features/dashboard/constants/mockData'
 import {
   ActivityList,
+  AdminOverview,
   DashboardEmpty,
   DashboardError,
   DashboardLoading,
@@ -44,6 +45,7 @@ function formatLongDate(date = new Date()) {
 export default function DashboardPage() {
   const user = useAuthStore(selectUser)
   const firstName = user?.firstName ?? 'there'
+  const isAdmin = user?.role === 'admin'
 
   const overviewQuery = useDashboardOverview()
   const salesQuery = useSalesStats()
@@ -124,6 +126,8 @@ export default function DashboardPage() {
           business today.
         </p>
       </header>
+
+      {isAdmin ? <AdminOverview /> : null}
 
       <section
         aria-label="Key metrics"

@@ -1,4 +1,5 @@
 export * from './ActivityList'
+export * from './AdminOverview'
 export * from './DashboardEmpty'
 export * from './DashboardError'
 export * from './DashboardLoading'
