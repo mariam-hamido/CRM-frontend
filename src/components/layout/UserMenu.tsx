@@ -18,7 +18,7 @@ import {
   selectUser,
   useAuthStore,
 } from '@/features/auth/store/authStore'
-import { clearAuth } from '@/features/auth/utils/authUtils'
+import { clearSession } from '@/features/auth/utils/authUtils'
 
 export function UserMenu() {
   const user = useAuthStore(selectUser)
@@ -32,7 +32,7 @@ export function UserMenu() {
     : 'Guest'
 
   const handleLogout = () => {
-    clearAuth()
+    clearSession()
     navigate(ROUTES.login)
   }
 

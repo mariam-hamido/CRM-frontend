@@ -4,6 +4,8 @@ import type {
   InternalAxiosRequestConfig,
 } from 'axios'
 import { AUTH_TOKEN_STORAGE_KEY } from '@/api/config'
+import { isAuthenticated } from '@/features/auth/utils/authUtils'
+import { clearSession } from '@/features/auth/utils/authUtils'
 
 export const NETWORK_ERROR_MESSAGE =
   'Network error. Please check your connection.'
@@ -52,13 +54,29 @@ export function handleResponse(response: AxiosResponse) {
   return response
 }
 
+// Guard: only one session-expiration flow executes per page lifetime. A hard
+// redirect resets everything, so this never needs to be explicitly cleared.
+let sessionExpiredHandled = false
+
 export function handleResponseError(error: AxiosError): Promise<never> {
   if (error.response) {
     const { status, data } = error.response
     const payload = data as Partial<ApiErrorPayload> | undefined
     const message = payload?.message ?? GENERIC_API_ERROR_MESSAGE
 
-    if (status === 401) {
+    // F2 — global 401 handling: clear auth + query cache and hard-redirect to
+    // login when an AUTHENTICATED session is rejected. Public endpoints
+    // (login/registration) may also return 400-level auth errors but never 401;
+    // if they somehow do, the isAuthenticated guard prevents an unnecessary
+    // redirect loop — the error is surfaced as a normal form error instead.
+    if (
+      status === 401 &&
+      !sessionExpiredHandled &&
+      isAuthenticated()
+    ) {
+      sessionExpiredHandled = true
+      clearSession()
+      window.location.href = '/login'
       return Promise.reject(
         new ApiError(message, {
           status,

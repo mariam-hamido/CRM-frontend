@@ -1,3 +1,4 @@
+import { queryClient } from '@/app/queryClient'
 import {
   selectIsAuthenticated,
   selectToken,
@@ -15,11 +16,21 @@ export function isAuthenticated(): boolean {
 }
 
 /**
- * Fully clears authentication: resets the Zustand state, removes the persisted
- * 'flowcrm.auth' entry, and (via the store's token subscription) removes the
- * 'flowcrm.accessToken' key the Axios interceptor reads.
+ * Clears persisted authentication state: resets the Zustand state, removes the
+ * persisted 'flowcrm.auth' entry, and (via the store's token subscription)
+ * removes the 'flowcrm.accessToken' key the Axios interceptor reads.
  */
 export function clearAuth(): void {
   useAuthStore.getState().logout()
   void useAuthStore.persist.clearStorage()
+}
+
+/**
+ * Full session cleanup: clears authentication state AND the entire React Query
+ * server-state cache. Used by both manual logout and global 401 handling so the
+ * two paths share a single authoritative cleanup.
+ */
+export function clearSession(): void {
+  clearAuth()
+  queryClient.clear()
 }
