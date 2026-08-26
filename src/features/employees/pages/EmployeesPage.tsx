@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { TriangleAlert, UsersRound } from 'lucide-react'
 import { GENERIC_API_ERROR_MESSAGE } from '@/api/interceptors'
+import { ROUTES } from '@/app/router/routeConstants'
 import { Card, CardContent } from '@/components/ui/card'
 import { Pagination } from '@/components/ui/pagination'
 import { SelectField } from '@/components/ui/select-field'
@@ -49,6 +51,12 @@ export default function EmployeesPage() {
           <p className="text-sm text-muted-foreground">
             Manage the people in your company.
           </p>
+          <Link
+            to={ROUTES.invitations}
+            className="text-sm text-muted-foreground underline-offset-2 hover:underline"
+          >
+            View invitations →
+          </Link>
         </div>
       </header>
 

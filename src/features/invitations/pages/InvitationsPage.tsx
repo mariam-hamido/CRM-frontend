@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { MailPlus, TriangleAlert, UserRoundPlus } from 'lucide-react'
 import { GENERIC_API_ERROR_MESSAGE } from '@/api/interceptors'
+import { ROUTES } from '@/app/router/routeConstants'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Pagination } from '@/components/ui/pagination'
@@ -50,6 +52,12 @@ export default function InvitationsPage() {
           <p className="text-sm text-muted-foreground">
             Approve employee emails so they can join your company.
           </p>
+          <Link
+            to={ROUTES.employees}
+            className="text-sm text-muted-foreground underline-offset-2 hover:underline"
+          >
+            View employees →
+          </Link>
         </div>
         <Button type="button" onClick={() => setInviteOpen(true)}>
           <MailPlus aria-hidden="true" />
