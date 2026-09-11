@@ -4,15 +4,35 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 import { MobileSidebar } from '@/components/layout/MobileSidebar'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { TopBar } from '@/components/layout/TopBar'
+import { useGetCurrentUser } from '@/features/auth/hooks/useGetCurrentUser'
+import {
+  selectIsAuthenticated,
+  useAuthStore,
+} from '@/features/auth/store/authStore'
 
 export function DashboardLayout() {
+  const isAuthenticated = useAuthStore(selectIsAuthenticated)
+  const setUser = useAuthStore((state) => state.setUser)
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const { pathname } = useLocation()
 
+  // Fetch the authoritative current user on boot so a full page refresh always
+  // rehydrates a fresh snapshot from the server (avatar included) instead of
+  // trusting whatever localStorage still holds.
+  const { data: currentUserResponse } = useGetCurrentUser({
+    enabled: isAuthenticated,
+  })
+
   useEffect(() => {
     setMobileOpen(false)
   }, [pathname])
+
+  useEffect(() => {
+    const serverUser = currentUserResponse?.data
+    if (!serverUser) return
+    setUser(serverUser)
+  }, [currentUserResponse?.data, setUser])
 
   return (
     <TooltipProvider delayDuration={0}>
