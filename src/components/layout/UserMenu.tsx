@@ -1,5 +1,5 @@
-import { useNavigate } from 'react-router-dom'
-import { LogOut } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { LogOut, Settings, UserRound } from 'lucide-react'
 import {
   Avatar,
   AvatarFallback,
@@ -63,8 +63,18 @@ export function UserMenu() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem disabled>Profile</DropdownMenuItem>
-        <DropdownMenuItem disabled>Settings</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to={ROUTES.profile}>
+            <UserRound aria-hidden="true" />
+            Profile
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link to={ROUTES.settings}>
+            <Settings aria-hidden="true" />
+            Settings
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onSelect={handleLogout}>
           <LogOut aria-hidden="true" />

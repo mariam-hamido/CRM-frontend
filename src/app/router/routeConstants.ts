@@ -5,6 +5,7 @@ export const ROUTES = {
   registerAdmin: '/register/admin',
   registerEmployee: '/register/employee',
   dashboard: '/dashboard',
+  profile: '/profile',
   companies: '/companies',
   customers: '/customers',
   customersDetail: '/customers/:id',

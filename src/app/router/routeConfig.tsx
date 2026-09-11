@@ -24,6 +24,7 @@ import {
   NotFoundPage,
   NotificationsPage,
   PipelinesPage,
+  ProfilePage,
   RegisterPage,
   TaskDetailPage,
   TasksPage,
@@ -89,6 +90,14 @@ export const routeConfig: RouteObject[] = [
             element: (
               <Suspense fallback={<LoadingFallback />}>
                 <DashboardPage />
+              </Suspense>
+            ),
+          },
+          {
+            path: ROUTES.profile,
+            element: (
+              <Suspense fallback={<LoadingFallback />}>
+                <ProfilePage />
               </Suspense>
             ),
           },

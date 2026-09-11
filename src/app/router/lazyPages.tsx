@@ -9,6 +9,7 @@ export const EmployeeRegisterPage = lazy(
   () => import('@/features/auth/pages/EmployeeRegisterPage')
 )
 export const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'))
+export const ProfilePage = lazy(() => import('@/features/auth/pages/ProfilePage'))
 export const CompaniesPage = lazy(() => import('@/features/companies/pages/CompaniesPage'))
 export const CompanySettingsPage = lazy(() => import('@/features/companies/pages/CompanySettingsPage'))
 export const CustomersPage = lazy(() => import('@/features/customers/pages/CustomersPage'))
