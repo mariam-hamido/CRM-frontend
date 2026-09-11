@@ -3,6 +3,7 @@ export const AUTH = {
   REGISTER: '/auth/register',
   REGISTER_ADMIN: '/auth/register/admin',
   REGISTER_EMPLOYEE: '/auth/register/employee',
+  ME: '/auth/me',
 } as const
 
 export const COMPANIES = {

@@ -3,6 +3,7 @@ import { LogOut, Settings, UserRound } from 'lucide-react'
 import {
   Avatar,
   AvatarFallback,
+  AvatarImage,
 } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,6 +20,7 @@ import {
   useAuthStore,
 } from '@/features/auth/store/authStore'
 import { clearSession } from '@/features/auth/utils/authUtils'
+import { resolveAssetUrl } from '@/features/auth/utils/assetUrl'
 
 export function UserMenu() {
   const user = useAuthStore(selectUser)
@@ -30,6 +32,8 @@ export function UserMenu() {
   const displayName = user
     ? `${user.firstName} ${user.lastName}`
     : 'Guest'
+
+  const avatarUrl = resolveAssetUrl(user?.avatar)
 
   const handleLogout = () => {
     clearSession()
@@ -47,6 +51,9 @@ export function UserMenu() {
           aria-label="Open user menu"
         >
           <Avatar size="sm">
+            {avatarUrl ? (
+              <AvatarImage src={avatarUrl} alt="User avatar" />
+            ) : null}
             <AvatarFallback className="text-xs">{initials}</AvatarFallback>
           </Avatar>
         </Button>

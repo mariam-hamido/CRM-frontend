@@ -52,6 +52,16 @@ export type AdminRegisterResponse = ApiResponse<AuthUser>
 
 export type EmployeeRegisterResponse = ApiResponse<AuthUser>
 
+// Profile update - only user-editable personal fields. Email, role, company,
+// status and timestamps are system-managed and cannot be changed.
+export interface UpdateProfileRequest {
+  firstName?: string
+  lastName?: string
+  phone?: string
+}
+
+export type UpdateProfileResponse = ApiResponse<AuthUser>
+
 export interface AuthErrorDetail {
   field: string
   message: string
