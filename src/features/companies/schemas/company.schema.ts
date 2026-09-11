@@ -30,6 +30,16 @@ const optionalEmail = z
   )
   .transform((value) => (value ? value : undefined))
 
+const optionalCurrency = z
+  .string()
+  .trim()
+  .optional()
+  .refine(
+    (value) => !value || /^[A-Za-z]{3}$/.test(value),
+    'Use a 3-letter currency code'
+  )
+  .transform((value) => (value ? value.toUpperCase() : undefined))
+
 export const companyUpdateSchema = z.object({
   name: z
     .string()
@@ -47,7 +57,7 @@ export const companyUpdateSchema = z.object({
   subscriptionPlan: z.enum(COMPANY_SUBSCRIPTION_PLANS).optional(),
   status: z.enum(COMPANY_STATUSES).optional(),
   timezone: optionalTrimmedString,
-  currency: optionalTrimmedString,
+  currency: optionalCurrency,
 })
 
 export type CompanyUpdateFormValues = z.input<typeof companyUpdateSchema>

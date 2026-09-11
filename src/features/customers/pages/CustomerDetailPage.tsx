@@ -7,6 +7,7 @@ import {
   CompanyInfoCard,
   type CompanyInfoRow,
 } from '@/features/companies/components'
+import { useCurrencyFormatter } from '@/features/companies/hooks/useCurrencyFormatter'
 import {
   CustomerListError,
   CustomerListLoading,
@@ -21,11 +22,7 @@ import { CustomerContactsSection } from '@/features/customers/contacts/component
 import { useGetCustomer } from '@/features/customers/hooks/useGetCustomers'
 import { useGetCompany } from '@/features/companies/hooks/useGetCompany'
 import type { Customer } from '@/features/customers/types/customer.types'
-import {
-  formatCount,
-  formatDate,
-  formatRevenue,
-} from '@/features/customers/utils/customerUtils'
+import { formatCount, formatDate } from '@/features/customers/utils/customerUtils'
 
 function buildWebsite(value: string) {
   const isAbsoluteUrl = /^https?:\/\//i.test(value)
@@ -71,7 +68,10 @@ function buildLocationRows(customer: Customer): CompanyInfoRow[] {
   return rows
 }
 
-function buildBusinessRows(customer: Customer): CompanyInfoRow[] {
+function buildBusinessRows(
+  customer: Customer,
+  formatCurrency: (value?: number | null) => string
+): CompanyInfoRow[] {
   return [
     {
       label: 'Status',
@@ -84,7 +84,7 @@ function buildBusinessRows(customer: Customer): CompanyInfoRow[] {
     {
       label: 'Annual revenue',
       value: customer.annualRevenue
-        ? formatRevenue(customer.annualRevenue)
+        ? formatCurrency(customer.annualRevenue)
         : '—',
     },
     {
@@ -118,6 +118,7 @@ export default function CustomerDetailPage() {
   const navigate = useNavigate()
   const customerQuery = useGetCustomer(id)
   const companyQuery = useGetCompany()
+  const { formatCurrency } = useCurrencyFormatter()
 
   const customer = customerQuery.data
 
@@ -174,7 +175,7 @@ export default function CustomerDetailPage() {
             />
             <CompanyInfoCard
               title="Business information"
-              rows={buildBusinessRows(customer)}
+              rows={buildBusinessRows(customer, formatCurrency)}
             />
             <CompanyInfoCard
               title="Customer metadata"

@@ -252,7 +252,7 @@ export function CompanySettingsForm({ company }: { company: Company }) {
           </Label>
           <Input
             id="currency"
-            placeholder="USD"
+            placeholder="ISO currency code"
             aria-invalid={errors.currency ? true : undefined}
             aria-describedby={
               errors.currency ? 'currency-error' : undefined

@@ -9,13 +9,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/app/router/routeConstants'
+import { useCurrencyFormatter } from '@/features/companies/hooks/useCurrencyFormatter'
 import { DealStatusBadge } from '@/features/deals/components/DealStatusBadge'
 import type { Deal } from '@/features/deals/types/deal.types'
-import {
-  formatDate,
-  formatDealValue,
-  formatProbability,
-} from '@/features/deals/utils/dealUtils'
+import { formatDate, formatProbability } from '@/features/deals/utils/dealUtils'
 
 export const DEAL_COLUMNS =
   'md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.2fr)_minmax(0,1.1fr)_auto_auto_auto_minmax(0,0.8fr)_auto]'
@@ -73,6 +70,8 @@ export function DealRow({
   onEdit: (deal: Deal) => void
   onDelete: (deal: Deal) => void
 }) {
+  const { formatCurrency } = useCurrencyFormatter()
+
   return (
     <li className="border-b transition-colors last:border-0 hover:bg-muted/50">
       <div
@@ -93,7 +92,7 @@ export function DealRow({
           {stageName ?? '—'}
         </div>
         <div className="tabular-nums text-muted-foreground">
-          {formatDealValue(deal.value)}
+          {formatCurrency(deal.value)}
         </div>
         <div className="hidden tabular-nums text-muted-foreground md:block">
           {formatProbability(deal.probability)}
@@ -134,7 +133,7 @@ export function DealRow({
         </div>
         <div className="flex flex-col gap-0.5 text-sm text-muted-foreground">
           <p className="tabular-nums">
-            {formatDealValue(deal.value)} · {formatProbability(deal.probability)}
+            {formatCurrency(deal.value)} · {formatProbability(deal.probability)}
           </p>
           {ownerName ? <p className="truncate">{ownerName}</p> : null}
         </div>

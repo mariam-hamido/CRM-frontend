@@ -12,13 +12,10 @@ import {
 import { Button } from '@/components/ui/button'
 import { ROUTES } from '@/app/router/routeConstants'
 import { cn } from '@/lib/utils'
+import { useCurrencyFormatter } from '@/features/companies/hooks/useCurrencyFormatter'
 import { DealStatusBadge } from '@/features/deals/components/DealStatusBadge'
 import type { Deal } from '@/features/deals/types/deal.types'
-import {
-  formatDate,
-  formatDealValue,
-  formatProbability,
-} from '@/features/deals/utils/dealUtils'
+import { formatDate, formatProbability } from '@/features/deals/utils/dealUtils'
 
 export function DealKanbanCard({
   deal,
@@ -33,6 +30,7 @@ export function DealKanbanCard({
   onEdit: (deal: Deal) => void
   onDelete: (deal: Deal) => void
 }) {
+  const { formatCurrency } = useCurrencyFormatter()
   const {
     attributes,
     listeners,
@@ -108,7 +106,7 @@ export function DealKanbanCard({
       <div className="flex flex-col gap-1 pl-8 text-sm">
         <p className="truncate text-muted-foreground">{customerName ?? '—'}</p>
         <p className="tabular-nums font-medium">
-          {formatDealValue(deal.value)}
+          {formatCurrency(deal.value)}
           <span className="font-normal text-muted-foreground">
             {' '}· {formatProbability(deal.probability)}
           </span>

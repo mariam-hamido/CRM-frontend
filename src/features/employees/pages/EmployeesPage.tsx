@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { TriangleAlert, UsersRound } from 'lucide-react'
+import { MailPlus, TriangleAlert, UsersRound } from 'lucide-react'
 import { GENERIC_API_ERROR_MESSAGE } from '@/api/interceptors'
 import { ROUTES } from '@/app/router/routeConstants'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Pagination } from '@/components/ui/pagination'
 import { SelectField } from '@/components/ui/select-field'
@@ -18,6 +19,7 @@ import type {
   Employee,
   EmployeeStatusFilter,
 } from '@/features/employees/types/employee.types'
+import { InviteEmployeeDialog } from '@/features/invitations/components'
 
 const PAGE_SIZE = 10
 
@@ -26,6 +28,7 @@ export default function EmployeesPage() {
 
   const [page, setPage] = useState(1)
   const [statusFilter, setStatusFilter] = useState<EmployeeStatusFilter | ''>('')
+  const [inviteOpen, setInviteOpen] = useState(false)
   const [employeeToRemove, setEmployeeToRemove] = useState<Employee | null>(
     null
   )
@@ -58,6 +61,10 @@ export default function EmployeesPage() {
             View invitations →
           </Link>
         </div>
+        <Button type="button" onClick={() => setInviteOpen(true)}>
+          <MailPlus aria-hidden="true" />
+          Invite employee
+        </Button>
       </header>
 
       <div className="flex flex-wrap items-center gap-3">
@@ -105,9 +112,15 @@ export default function EmployeesPage() {
               <p className="text-sm text-muted-foreground">
                 {hasActiveFilters
                   ? 'Try adjusting your filters.'
-                  : 'Employees who join your company will appear here.'}
+                  : 'Invite employees so they can register and join your company workspace.'}
               </p>
             </div>
+            {!hasActiveFilters ? (
+              <Button type="button" onClick={() => setInviteOpen(true)}>
+                <MailPlus aria-hidden="true" />
+                Invite employees
+              </Button>
+            ) : null}
           </CardContent>
         </Card>
       ) : (
@@ -133,6 +146,8 @@ export default function EmployeesPage() {
         }}
         employee={employeeToRemove}
       />
+
+      <InviteEmployeeDialog open={inviteOpen} onOpenChange={setInviteOpen} />
     </div>
   )
 }

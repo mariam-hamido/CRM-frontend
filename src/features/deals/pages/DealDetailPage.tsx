@@ -8,6 +8,7 @@ import {
   CompanyInfoCard,
   type CompanyInfoRow,
 } from '@/features/companies/components'
+import { useCurrencyFormatter } from '@/features/companies/hooks/useCurrencyFormatter'
 import { selectUser, useAuthStore } from '@/features/auth/store/authStore'
 import { useGetCustomers, useGetCustomer } from '@/features/customers/hooks/useGetCustomers'
 import {
@@ -20,11 +21,7 @@ import {
 import { DEAL_STATUS_LABELS } from '@/features/deals/constants/dealLabels'
 import { useDeal } from '@/features/deals/hooks/useDeal'
 import type { Deal } from '@/features/deals/types/deal.types'
-import {
-  formatDate,
-  formatDealValue,
-  formatProbability,
-} from '@/features/deals/utils/dealUtils'
+import { formatDate, formatProbability } from '@/features/deals/utils/dealUtils'
 import { usePipelines } from '@/features/pipelines/hooks/usePipelines'
 import { usePipeline } from '@/features/pipelines/hooks/usePipeline'
 import {
@@ -37,12 +34,13 @@ const LOOKUP_LIMIT = 100
 
 function buildOverviewRows(
   deal: Deal,
+  formatCurrency: (value?: number | null) => string,
   pipelineName?: string,
   stageName?: string
 ): CompanyInfoRow[] {
   const rows: CompanyInfoRow[] = [
     { label: 'Title', value: deal.title },
-    { label: 'Value', value: formatDealValue(deal.value) },
+    { label: 'Value', value: formatCurrency(deal.value) },
     { label: 'Probability', value: formatProbability(deal.probability) },
     { label: 'Status', value: DEAL_STATUS_LABELS[deal.status] },
     { label: 'Pipeline', value: pipelineName ?? '—' },
@@ -94,6 +92,7 @@ export default function DealDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const currentUser = useAuthStore(selectUser)
+  const { formatCurrency } = useCurrencyFormatter()
 
   const [editOpen, setEditOpen] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
@@ -195,7 +194,12 @@ export default function DealDetailPage() {
           >
             <CompanyInfoCard
               title="Deal overview"
-              rows={buildOverviewRows(deal, pipelineName, stageName)}
+              rows={buildOverviewRows(
+                deal,
+                formatCurrency,
+                pipelineName,
+                stageName
+              )}
               className="lg:col-span-2"
             />
             <CompanyInfoCard

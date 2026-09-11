@@ -7,8 +7,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
+import { useCurrencyFormatter } from '@/features/companies/hooks/useCurrencyFormatter'
 import type { DashboardSalesStats } from '@/features/dashboard/types/dashboard.types'
-import { formatCurrency } from '@/features/dashboard/utils/dashboardUtils'
 
 export function SalesOverviewCard({
   stats,
@@ -17,6 +17,8 @@ export function SalesOverviewCard({
   stats: DashboardSalesStats | undefined
   className?: string
 }) {
+  const { formatCurrency } = useCurrencyFormatter()
+
   return (
     <Card className={cn('h-full', className)}>
       <CardHeader>

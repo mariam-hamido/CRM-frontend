@@ -50,16 +50,6 @@ export function toCustomerPayload(
   }
 }
 
-const REVENUE_FORMATTER = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumFractionDigits: 0,
-})
-
-export function formatRevenue(value?: number) {
-  return value === undefined ? '—' : REVENUE_FORMATTER.format(value)
-}
-
 export function formatCount(value?: number) {
   return value === undefined ? '—' : value.toLocaleString()
 }

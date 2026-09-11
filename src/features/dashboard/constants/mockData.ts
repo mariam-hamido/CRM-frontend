@@ -140,7 +140,7 @@ export const ACTIVITIES_MOCK: ActivityItem[] = [
     id: 'activity-3',
     type: 'deal',
     title: 'Deal moved to Proposal',
-    description: 'Acme Corp · $24,000',
+    description: 'Acme Corp · Proposal stage',
     timestamp: 'Yesterday',
   },
   {

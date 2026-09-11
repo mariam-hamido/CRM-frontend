@@ -74,16 +74,6 @@ export function toUpdateDealPayload(
   }
 }
 
-const DEAL_VALUE_FORMATTER = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumFractionDigits: 0,
-})
-
-export function formatDealValue(value?: number) {
-  return value === undefined ? '—' : DEAL_VALUE_FORMATTER.format(value)
-}
-
 export function formatProbability(value?: number) {
   return value === undefined ? '—' : `${value}%`
 }

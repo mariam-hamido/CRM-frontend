@@ -8,14 +8,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { useCurrencyFormatter } from '@/features/companies/hooks/useCurrencyFormatter'
 import { CustomerSourceBadge } from '@/features/customers/components/CustomerSourceBadge'
 import { CustomerStatusBadge } from '@/features/customers/components/CustomerStatusBadge'
 import type { Customer } from '@/features/customers/types/customer.types'
-import {
-  formatCount,
-  formatDate,
-  formatRevenue,
-} from '@/features/customers/utils/customerUtils'
+import { formatCount, formatDate } from '@/features/customers/utils/customerUtils'
 
 export function CustomerTable({
   customers,
@@ -28,6 +25,8 @@ export function CustomerTable({
   onEdit: (customer: Customer) => void
   onDelete: (customer: Customer) => void
 }) {
+  const { formatCurrency } = useCurrencyFormatter()
+
   return (
     <Card>
       <div className="overflow-x-auto">
@@ -87,7 +86,7 @@ export function CustomerTable({
                   <CustomerSourceBadge source={customer.source} />
                 </td>
                 <td className="hidden px-4 py-3 tabular-nums text-muted-foreground lg:table-cell">
-                  {formatRevenue(customer.annualRevenue)}
+                  {formatCurrency(customer.annualRevenue)}
                 </td>
                 <td className="hidden px-4 py-3 tabular-nums text-muted-foreground xl:table-cell">
                   {formatCount(customer.employeesCount)}

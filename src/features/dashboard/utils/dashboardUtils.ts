@@ -13,15 +13,6 @@ const KNOWN_ACTIVITY_TYPES = new Set<ActivityType>([
   'task',
 ])
 
-export function formatCurrency(value?: number) {
-  if (value == null) return '—'
-  return new Intl.NumberFormat(undefined, {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(value)
-}
-
 export function formatRelativeTime(value?: string): string {
   if (!value) return ''
   const date = new Date(value)

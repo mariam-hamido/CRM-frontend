@@ -7,10 +7,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
+import { useCurrencyFormatter } from '@/features/companies/hooks/useCurrencyFormatter'
 import { LeadSourceBadge } from '@/features/leads/components/LeadSourceBadge'
 import { LeadStatusBadge } from '@/features/leads/components/LeadStatusBadge'
 import type { Lead } from '@/features/leads/types/lead.types'
-import { formatEstimatedValue } from '@/features/leads/utils/leadUtils'
 
 export const LEAD_COLUMNS =
   'md:grid-cols-[minmax(0,1.6fr)_minmax(0,1.3fr)_minmax(0,1.4fr)_auto_auto_auto_auto]'
@@ -67,6 +67,7 @@ export function LeadRow({
   onDelete: (lead: Lead) => void
 }) {
   const name = leadDisplayName(lead)
+  const { formatCurrency } = useCurrencyFormatter()
 
   return (
     <li className="border-b transition-colors last:border-0 hover:bg-muted/50">
@@ -87,7 +88,7 @@ export function LeadRow({
           <LeadSourceBadge source={lead.source} />
         </div>
         <div className="hidden min-w-0 truncate text-muted-foreground md:block">
-          {formatEstimatedValue(lead.estimatedValue)}
+          {lead.estimatedValue ? formatCurrency(lead.estimatedValue) : '—'}
         </div>
         <div className="flex justify-end">
           <LeadActions lead={lead} onEdit={onEdit} onDelete={onDelete} />

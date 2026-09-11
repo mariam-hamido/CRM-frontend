@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import type { ApiError } from '@/api/interceptors'
 import { createInvitation } from '@/features/invitations/api/invitationApi'
+import { employeesQueryKey } from '@/features/employees/hooks/employeeKeys'
 import type { Invitation } from '@/features/invitations/types/invitation.types'
 import { invitationsQueryKey } from '@/features/invitations/hooks/invitationKeys'
 
@@ -19,6 +20,7 @@ export function useCreateInvitation() {
       return response.data
     },
     onSuccess: (invitation) => {
+      void queryClient.invalidateQueries({ queryKey: employeesQueryKey })
       void queryClient.invalidateQueries({ queryKey: invitationsQueryKey })
       // Accurate wording: the backend records an allowlist entry - it does
       // not send an email.
